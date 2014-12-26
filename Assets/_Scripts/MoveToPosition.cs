@@ -18,18 +18,26 @@ public class MoveToPosition : MonoBehaviour
 
 		if(SystemInfo.deviceType == DeviceType.Desktop)
 		{
+			//Set target movement position to last mouse position
 			if(Input.GetMouseButtonUp(0))
 			{
-				//Set target movement position
 				end = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-				//Permit only horizontal movement
-				end.z = transform.position.z;
-
-				//if gravity is vertical
-				end.y = transform.position.y;
-				//else end.x = transform.position.x;
 			}
 		}
+		else if(SystemInfo.deviceType == DeviceType.Handheld)
+		{
+			//Set target movement position to last touch position
+			if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+			{
+				end = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+			}
+		}
+		//Permit only horizontal movement
+		end.z = transform.position.z;		
+		//if gravity is vertical
+		end.y = transform.position.y;
+		//else end.x = transform.position.x;
+
 		transform.position = Vector3.MoveTowards(start, end, speed * Time.deltaTime);
 	}
 }
