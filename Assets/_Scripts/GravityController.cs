@@ -7,9 +7,10 @@ public class GravityController : MonoBehaviour
     private GameObject[] dynamic;
     private Gyroscope gyro;    
     //gravity
-    public float gravity = 10f;
+    public float gravity = 5f;
     public float threshold = 0.6f;
     public Vector2 direction;
+    private Vector2 initial = new Vector2(0, -1);
     //accelerometer
     private Vector2 currentAcc;
     private float sensitivityH = 5f;
@@ -22,6 +23,10 @@ public class GravityController : MonoBehaviour
 
     void Start()
     {
+        //GUIStyle for gravity direction notification
+        thisStyle.fontSize = 20;
+        thisStyle.normal.textColor = Color.white;   
+
         player = GameObject.Find("Player");
         dynamic = GameObject.FindGameObjectsWithTag("Dynamic");
 
@@ -32,14 +37,12 @@ public class GravityController : MonoBehaviour
             ResetAcceleration();
         }
 
-        //GUIStyle for gravity direction notification
-        thisStyle.fontSize = 20;
-        thisStyle.normal.textColor = Color.white;
+        InitialGravity();
     }
 
     void FixedUpdate()
     {
-        if(gyro.enabled)
+        if(gyro.enabled && SystemInfo.deviceType != DeviceType.Desktop)
         {
             currentAcc = Vector2.Lerp(currentAcc, Input.acceleration, smooth * Time.deltaTime);
             getAxisH = Mathf.Clamp(currentAcc.x * sensitivityH, -1, 1);
@@ -61,11 +64,11 @@ public class GravityController : MonoBehaviour
         float vertical = Mathf.Abs(direction.y);
 
         //define range in which device can be oriented without affecting gravity
-        if((horizontal < threshold && vertical == 1) || (vertical < threshold && horizontal == 1))
+        //if((horizontal < threshold && vertical == 1) || (vertical < threshold && horizontal == 1))
         {
-            return;
+            //return;
         }
-        else 
+        //else 
         {
             player.rigidbody2D.AddForce(direction * gravity);
 
@@ -79,5 +82,10 @@ public class GravityController : MonoBehaviour
     void ResetAcceleration()
     {
         currentAcc = Input.acceleration;
+    }
+
+    void InitialGravity()
+    {
+        player.rigidbody2D.AddForce(initial * gravity);
     }
 }

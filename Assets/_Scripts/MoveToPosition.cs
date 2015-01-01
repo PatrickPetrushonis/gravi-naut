@@ -5,7 +5,7 @@ public class MoveToPosition : MonoBehaviour
 {
 	private Vector3 start;
 	private Vector3 end;
-	private float speed = 10f;
+	public float speed = 1.5f;
 
 	void Start()
 	{
