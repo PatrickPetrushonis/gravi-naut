@@ -8,7 +8,7 @@ public class GravityController : MonoBehaviour
     private Gyroscope gyro;    
     //gravity
     public float gravity = 5f;
-    public float threshold = 0.6f;
+    public float threshold = 0.9f;
     public Vector2 direction;
     private Vector2 initial = new Vector2(0, -1);
     //accelerometer
@@ -42,14 +42,9 @@ public class GravityController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(gyro.enabled && SystemInfo.deviceType != DeviceType.Desktop)
+        if(gyro.enabled)
         {
-            currentAcc = Vector2.Lerp(currentAcc, Input.acceleration, smooth * Time.deltaTime);
-            getAxisH = Mathf.Clamp(currentAcc.x * sensitivityH, -1, 1);
-            getAxisV = Mathf.Clamp(currentAcc.y * sensitivityV, -1, 1);
-            direction = new Vector2(getAxisH, getAxisV);
-
-            ApplyGravity();
+            DetermineDirection();            
         }
     }
 
@@ -58,25 +53,51 @@ public class GravityController : MonoBehaviour
         GUI.Label(new Rect(5, 25, 300, 25), "Gravity Direction (X, Y): " + direction, thisStyle);
     }
 
-    void ApplyGravity()
-    {        
+    void DetermineDirection()
+    {
+        currentAcc = Vector2.Lerp(currentAcc, Input.acceleration, smooth * Time.deltaTime);
+        getAxisH = Mathf.Clamp(currentAcc.x * sensitivityH, -1, 1);
+        getAxisV = Mathf.Clamp(currentAcc.y * sensitivityV, -1, 1);
+        direction = new Vector2(getAxisH, getAxisV);
+
         float horizontal = Mathf.Abs(direction.x);
         float vertical = Mathf.Abs(direction.y);
 
         //define range in which device can be oriented without affecting gravity
-        //if((horizontal < threshold && vertical == 1) || (vertical < threshold && horizontal == 1))
+        //portrait
+        if(direction.y == -1 && horizontal < threshold)
         {
-            //return;
+            ApplyGravity(new Vector2(0, -1));
         }
-        //else 
+        //upsidedown portrait
+        else if(direction.y == 1 && horizontal < threshold)
         {
-            player.rigidbody2D.AddForce(direction * gravity);
+            ApplyGravity(new Vector2(0, 1));
+        }
+        //left landscape
+        else if(direction.x == -1 && vertical < threshold)
+        {
+            ApplyGravity(new Vector2(-1, 0));
+        }
+        //right landscape
+        else if(direction.x == 1 && vertical < threshold)
+        {
+            ApplyGravity(new Vector2(1, 0));
+        }
+        else
+        {
+            ApplyGravity(new Vector2(direction.x, direction.y));
+        }
+    }
 
-            foreach(GameObject dynamicObj in dynamic)
-            {
-                dynamicObj.rigidbody2D.AddForce(direction * gravity);
-            }
-        }        
+    void ApplyGravity(Vector2 direction)
+    {
+        player.rigidbody2D.AddForce(direction * gravity);
+
+        foreach(GameObject dynamicObj in dynamic)
+        {
+            dynamicObj.rigidbody2D.AddForce(direction * gravity);
+        }                
     }
 
     void ResetAcceleration()
