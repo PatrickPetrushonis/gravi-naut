@@ -7,10 +7,15 @@ public class GravityController : MonoBehaviour
     private GameObject[] dynamic;
     private Gyroscope gyro;    
     //gravity
-    public float gravity = 5f;
-    public float threshold = 0.9f;
+    public float gravity = 3f;
+    public float threshold = 0.95f;
     public Vector2 direction;
     private Vector2 initial = new Vector2(0, -1);
+    //velocity
+    private float speedLimit = 2;
+    private Vector2 playerVel;
+    private Vector2 oppDirect;
+    private Vector2 totalForce;
     //accelerometer
     private Vector2 currentAcc;
     private float sensitivityH = 5f;
@@ -42,9 +47,9 @@ public class GravityController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(gyro.enabled)
+        //if(gyro.enabled)
         {
-            DetermineDirection();            
+            DetermineDirection();
         }
     }
 
@@ -55,7 +60,7 @@ public class GravityController : MonoBehaviour
 
     void DetermineDirection()
     {
-        currentAcc = Vector2.Lerp(currentAcc, Input.acceleration, smooth * Time.deltaTime);
+        currentAcc = Vector2.Lerp(currentAcc, Input.acceleration, smooth * Time.fixedDeltaTime);
         getAxisH = Mathf.Clamp(currentAcc.x * sensitivityH, -1, 1);
         getAxisV = Mathf.Clamp(currentAcc.y * sensitivityV, -1, 1);
         direction = new Vector2(getAxisH, getAxisV);
@@ -67,32 +72,44 @@ public class GravityController : MonoBehaviour
         //portrait
         if(direction.y == -1 && horizontal < threshold)
         {
-            ApplyGravity(new Vector2(0, -1));
+            direction = new Vector2(0, -1);
         }
         //upsidedown portrait
         else if(direction.y == 1 && horizontal < threshold)
         {
-            ApplyGravity(new Vector2(0, 1));
+            direction = new Vector2(0, 1);
         }
         //left landscape
         else if(direction.x == -1 && vertical < threshold)
         {
-            ApplyGravity(new Vector2(-1, 0));
+            direction = new Vector2(-1, 0);
         }
         //right landscape
         else if(direction.x == 1 && vertical < threshold)
         {
-            ApplyGravity(new Vector2(1, 0));
+            direction = new Vector2(1, 0);
         }
-        else
-        {
-            ApplyGravity(new Vector2(direction.x, direction.y));
-        }
+
+        ApplyGravity(new Vector2(direction.x, direction.y));
     }
 
     void ApplyGravity(Vector2 direction)
     {
-        player.rigidbody2D.AddForce(direction * gravity);
+        playerVel = player.rigidbody2D.velocity;
+        oppDirect = Vector2.zero;
+
+        float playerMag = playerVel.magnitude;        
+        float oppForce = 0;
+
+        if(playerMag > speedLimit)
+        { 
+            //add force in opposing direction equal to exceeding value over speedLimit
+            oppDirect = -direction;
+            oppForce = playerMag - speedLimit;
+        }
+
+        totalForce = direction * gravity + oppDirect * oppForce;
+        player.rigidbody2D.AddForce(totalForce);
 
         foreach(GameObject dynamicObj in dynamic)
         {
