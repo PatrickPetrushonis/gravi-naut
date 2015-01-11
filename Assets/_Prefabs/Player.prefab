@@ -11,9 +11,8 @@ GameObject:
   - 212: {fileID: 21242072}
   - 50: {fileID: 5042072}
   - 61: {fileID: 6142072}
-  - 114: {fileID: 11407162}
-  - 114: {fileID: 11464858}
-  m_Layer: 0
+  - 114: {fileID: 11476488}
+  m_Layer: 2
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -27,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142072}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.00999999978, y: -4.1500001, z: 0}
+  m_LocalPosition: {x: 0, y: -4.17500019, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -56,21 +55,9 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Size: {x: .400000006, y: .639999986}
-  m_Center: {x: 0, y: 0}
---- !u!114 &11407162
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 142072}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c22e15988cad23f4db1cb2454d239f62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 1.5
---- !u!114 &11464858
+  m_Size: {x: .349999994, y: .550000012}
+  m_Center: {x: -.0199999996, y: -.0299999993}
+--- !u!114 &11476488
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -78,9 +65,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 142072}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1628d6bf46aa53d439aec503a8a0771c, type: 3}
+  m_Script: {fileID: 11500000, guid: 1accf0aeb78d2ea4f86012d08111c30a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 1.5
+  distanceToGround: 0
 --- !u!212 &21242072
 SpriteRenderer:
   m_ObjectHideFlags: 1
