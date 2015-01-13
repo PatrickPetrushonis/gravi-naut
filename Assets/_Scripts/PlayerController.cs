@@ -26,34 +26,28 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //if(IsGrounded())
+        if(IsGrounded())
         {
             DetermineDestination();
             if(moving)
                 MovePlayer();
         }
+        else moving = false;
 
         ApplyGravity();
     }
 
     bool IsGrounded()
     {
-        LayerMask mask = LayerMask.NameToLayer("Static");
-
         //cast ray down from current position to slightly beneath player
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, distanceToGround, mask);
-        
-        Debug.DrawRay(transform.position, -Vector2.up, Color.red);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, distanceToGround);
 
         if(hit.collider != null)
         {
             Debug.DrawLine(transform.position, hit.point, Color.red);
-            Debug.Log(hit.transform.position.ToString());
             return true;
         }
-        
-        Debug.Log("Not grounded");
-        return false;
+        else return false; 
     }
 
     void DetermineDestination()
