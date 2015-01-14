@@ -148,7 +148,7 @@ GameObject:
   - 212: {fileID: 228352509}
   - 61: {fileID: 228352508}
   - 50: {fileID: 228352507}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Crate
   m_TagString: Dynamic
   m_Icon: {fileID: 0}
@@ -436,7 +436,7 @@ GameObject:
   - 58: {fileID: 391694864}
   - 122: {fileID: 391694863}
   - 114: {fileID: 391694868}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Collectible
   m_TagString: Collectible
   m_Icon: {fileID: 0}
@@ -531,7 +531,7 @@ GameObject:
   - 212: {fileID: 478063780}
   - 61: {fileID: 478063779}
   - 50: {fileID: 478063778}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Crate
   m_TagString: Dynamic
   m_Icon: {fileID: 0}
@@ -648,7 +648,7 @@ GameObject:
   m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!23 &698259184
 Renderer:
@@ -823,6 +823,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 153542, guid: 7b66527faf744b84f9d998b606bb27bd, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b66527faf744b84f9d998b606bb27bd, type: 2}
   m_RootGameObject: {fileID: 1145497589}
@@ -909,7 +913,7 @@ GameObject:
   - 58: {fileID: 864998349}
   - 122: {fileID: 864998348}
   - 114: {fileID: 864998347}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Collectible
   m_TagString: Collectible
   m_Icon: {fileID: 0}
@@ -1035,7 +1039,7 @@ GameObject:
   - 212: {fileID: 1145497593}
   - 61: {fileID: 1145497592}
   - 50: {fileID: 1145497591}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Crate
   m_TagString: Dynamic
   m_Icon: {fileID: 0}
@@ -1198,6 +1202,10 @@ Prefab:
       propertyPath: m_TagString
       value: Collectible
       objectReference: {fileID: 0}
+    - target: {fileID: 120598, guid: c93855f39cce0a9499cd922ca87850a8, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c93855f39cce0a9499cd922ca87850a8, type: 2}
   m_RootGameObject: {fileID: 864998346}
@@ -1250,7 +1258,7 @@ GameObject:
   m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!61 &1300099138
 BoxCollider2D:
@@ -1353,6 +1361,10 @@ Prefab:
       propertyPath: m_TagString
       value: Collectible
       objectReference: {fileID: 0}
+    - target: {fileID: 120598, guid: c93855f39cce0a9499cd922ca87850a8, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c93855f39cce0a9499cd922ca87850a8, type: 2}
   m_RootGameObject: {fileID: 1528706883}
@@ -1371,7 +1383,7 @@ GameObject:
   - 58: {fileID: 1528706886}
   - 122: {fileID: 1528706885}
   - 114: {fileID: 1528706884}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Collectible
   m_TagString: Collectible
   m_Icon: {fileID: 0}
@@ -1466,7 +1478,7 @@ GameObject:
   - 212: {fileID: 1548636446}
   - 61: {fileID: 1548636445}
   - 50: {fileID: 1548636444}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Crate
   m_TagString: Dynamic
   m_Icon: {fileID: 0}
@@ -1650,6 +1662,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 153542, guid: 7b66527faf744b84f9d998b606bb27bd, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b66527faf744b84f9d998b606bb27bd, type: 2}
   m_RootGameObject: {fileID: 1548636443}
@@ -1671,7 +1687,7 @@ GameObject:
   m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!61 &1672609420
 BoxCollider2D:
@@ -1773,6 +1789,10 @@ Prefab:
     - target: {fileID: 120598, guid: c93855f39cce0a9499cd922ca87850a8, type: 2}
       propertyPath: m_TagString
       value: Collectible
+      objectReference: {fileID: 0}
+    - target: {fileID: 120598, guid: c93855f39cce0a9499cd922ca87850a8, type: 2}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c93855f39cce0a9499cd922ca87850a8, type: 2}
@@ -1915,6 +1935,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 153542, guid: 7b66527faf744b84f9d998b606bb27bd, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b66527faf744b84f9d998b606bb27bd, type: 2}
   m_RootGameObject: {fileID: 478063777}
@@ -1933,7 +1957,7 @@ GameObject:
   - 58: {fileID: 1804556308}
   - 122: {fileID: 1804556307}
   - 114: {fileID: 1804556306}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Collectible
   m_TagString: Collectible
   m_Icon: {fileID: 0}
@@ -2164,7 +2188,7 @@ GameObject:
   m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!61 &2047175774
 BoxCollider2D:
@@ -2255,6 +2279,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 153542, guid: 7b66527faf744b84f9d998b606bb27bd, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b66527faf744b84f9d998b606bb27bd, type: 2}
   m_RootGameObject: {fileID: 228352506}
@@ -2306,6 +2334,10 @@ Prefab:
     - target: {fileID: 120598, guid: c93855f39cce0a9499cd922ca87850a8, type: 2}
       propertyPath: m_TagString
       value: Collectible
+      objectReference: {fileID: 0}
+    - target: {fileID: 120598, guid: c93855f39cce0a9499cd922ca87850a8, type: 2}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c93855f39cce0a9499cd922ca87850a8, type: 2}

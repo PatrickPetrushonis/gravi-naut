@@ -6,14 +6,14 @@ public class PlayerController : MonoBehaviour
     private GameObject gravityManager;
     private GravityController gravityController;
 
-    private Vector2 direction;          //direction of gravity upon movement request
-    private Vector2 start;              //starting position during a movement request
-    private Vector2 end;                //destination for player movement
-    private bool moving = false;        //whether a movement request is being fulfilled
+    private Vector2 direction;              //direction of gravity upon movement request
+    private Vector2 start;                  //starting position during a movement request
+    private Vector2 end;                    //destination for player movement
+    private bool moving = false;            //whether a movement request is being fulfilled
 
-    public float moveSpeed = 1.5f;      //speed of player movement
-    public float distanceToGround;      //distance to check if player is grounded
-    private float precision = 0.01f;    //maximum allowable offset from exact destination
+    public float moveSpeed = 1.5f;          //speed of player movement
+    public float distanceToGround;          //distance to check if player is grounded
+    private float precision = 0.1f;         //maximum allowable offset from exact destination
 
     void Start()
     {
@@ -32,7 +32,10 @@ public class PlayerController : MonoBehaviour
             if(moving)
                 MovePlayer();
         }
-        else moving = false;
+        else
+        {            
+            moving = false;                       
+        }
 
         ApplyGravity();
     }
@@ -40,14 +43,12 @@ public class PlayerController : MonoBehaviour
     bool IsGrounded()
     {
         //cast ray down from current position to slightly beneath player
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up, distanceToGround);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.up, distanceToGround);
 
         if(hit.collider != null)
-        {
-            Debug.DrawLine(transform.position, hit.point, Color.red);
             return true;
-        }
-        else return false; 
+         
+        return false;
     }
 
     void DetermineDestination()
