@@ -9,9 +9,6 @@ public class EventController : MonoBehaviour
 
     void Start()
     {
-        collectibles = GameObject.FindGameObjectsWithTag("Collectible");
-        GameController.gameControl.totalCollectibles = collectibles.Length;
-
         if(Application.loadedLevel == 0)
             objectName = "Cage";
 
@@ -20,7 +17,7 @@ public class EventController : MonoBehaviour
 
     void Update()
     {
-        if(GameController.gameControl.currentCollectible >= GameController.gameControl.totalCollectibles)
+        if(GameData.data.collectibleCount >= GameData.data.collectibleTotal)
         {
             if(Application.loadedLevel == 0)
                 Destroy(eventObject);

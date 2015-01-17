@@ -3,29 +3,72 @@ using System.Collections;
 
 public class GameController : MonoBehaviour 
 {
-    //Controls vital non-specific features of the game:
-    //Pause Game
-    //Edit Game Options
-    //Reset Current Level
-    //Load Next Level
-    //Close Game
-    //Tracks Progress
+    private GameObject gravityManager;
+    private GameObject player;
+    private bool paused = false;
 
-    public static GameController gameControl;
-
-    public int currentCollectible;
-    public int totalCollectibles;
-
-    void Awake()
+    void Start()
     {
-        if(gameControl == null)
+        GameData.data.currentLevel = Application.loadedLevel;
+        gravityManager = GameObject.Find("GravityManager");
+        player = GameObject.Find("Player");
+    }
+
+    void OnGUI()
+    {
+        if(paused)
         {
-            DontDestroyOnLoad(gameObject);
-            gameControl = this;
+            if(GUI.Button(new Rect(UIData.leftIndent, UIData.topIndent - (UIData.height + UIData.margin), UIData.width, UIData.height), "Resume"))
+            {
+                ResumeGame();
+            }
+            if(GUI.Button(new Rect(UIData.leftIndent, UIData.topIndent, UIData.width, UIData.height), "Restart"))
+            {
+                ResetLevel();
+            }
+            if(GUI.Button(new Rect(UIData.leftIndent, UIData.topIndent + (UIData.height + UIData.margin), UIData.width, UIData.height), "Quit"))
+            {
+                CloseGame();
+            }
         }
-        else if(gameControl != this)
+        else 
         {
-            Destroy(gameObject);
+            if(GUI.Button(UIData.pauseButton, ""))
+            {
+                PauseGame();
+            }
         }
+    }
+
+    public void PauseGame()
+    {
+        paused = true;
+        Time.timeScale = 0;
+        gravityManager.SetActive(false);
+        Input.gyro.enabled = false;
+    }
+
+    public void ResumeGame()
+    {
+        paused = false;
+        Time.timeScale = 1;
+        gravityManager.SetActive(true);
+        Input.gyro.enabled = true;
+        player.rigidbody2D.velocity = Vector2.zero;
+    }
+
+    public void ResetLevel()
+    {
+        Application.LoadLevel(GameData.data.currentLevel);
+    }
+
+    public void LoadNextLevel()
+    {
+        Application.LoadLevel(GameData.data.currentLevel++);
+    }
+
+    public void CloseGame()
+    {
+        Application.Quit();
     }
 }

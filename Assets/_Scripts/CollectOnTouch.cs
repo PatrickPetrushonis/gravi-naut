@@ -6,9 +6,10 @@ public class CollectOnTouch : MonoBehaviour
     private Collider2D thisCollider;
 
     void Start()
-    {
+    {        
         thisCollider = gameObject.GetComponent<Collider2D>();
-        
+        GameData.data.collectibleTotal++;
+
         if(!thisCollider.isTrigger)
             thisCollider.isTrigger = true;
     }
@@ -17,7 +18,7 @@ public class CollectOnTouch : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            GameController.gameControl.currentCollectible++;
+            GameData.data.collectibleCount++;
             Destroy(gameObject);
         }
     }
