@@ -26,8 +26,8 @@ public class GravityController : MonoBehaviour
     private float sensitivityV = 5f;
     private float smooth = 2.5f;        //smoothing factor in Lerp calculation
     private float getAxisH = 0f;        //current horizontal and vertical axes input
-    private float getAxisV = 0f; 
-
+    private float getAxisV = 0f;
+    
     void Start()
     {
         player = GameObject.Find("Player");

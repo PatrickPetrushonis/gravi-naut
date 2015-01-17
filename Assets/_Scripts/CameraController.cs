@@ -8,9 +8,10 @@ public class CameraController : MonoBehaviour
     private Transform target;
 
     private Vector3 velocity = Vector3.zero;
-    public float dampTime = 0.5f;
+    public float dampTime = 0.25f;
     public float defaultSize = 1.95f;
     public float pauseSize = 5f;    
+
 
     void Start()
     {
