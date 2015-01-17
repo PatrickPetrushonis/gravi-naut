@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        direction = gravityController.direction;        
+        direction = gravityController.direction;
 
         if(IsGrounded())
         {
@@ -89,10 +89,21 @@ public class PlayerController : MonoBehaviour
             desiredOrient = Quaternion.Euler(0, 0, 0);
         else if(direction.x == 0 && direction.y == 1)       //upside-down portrait
             desiredOrient = Quaternion.Euler(0, 0, 180);
-        else if(direction.x == 1 && direction.y == 0)       //right landscape
-            desiredOrient = Quaternion.Euler(0, 0, 90);
+        
+        else if(direction.x == -1 && direction.y == -1)     //between portrait & left landscape
+            desiredOrient = Quaternion.Euler(0, 0, -45);
+        else if(direction.x == 1 && direction.y == -1)      //between portrait & right landscape 
+            desiredOrient = Quaternion.Euler(0, 0, 45);
+
         else if(direction.x == -1 && direction.y == 0)      //left landscape
             desiredOrient = Quaternion.Euler(0, 0, -90);
+        else if(direction.x == 1 && direction.y == 0)       //right landscape
+            desiredOrient = Quaternion.Euler(0, 0, 90);
+
+        else if(direction.x == -1 && direction.y == 1)      //between upside-down portrait & left landscape
+            desiredOrient = Quaternion.Euler(0, 0, -135);        
+        else if(direction.x == 1 && direction.y == 1)       //between upside-down portrait & right landscape
+            desiredOrient = Quaternion.Euler(0, 0, 135);
 
         //rotate player from current rotation to new orientation
         transform.rotation = Quaternion.Lerp(transform.rotation, desiredOrient, Time.deltaTime * rotationSpeed);
