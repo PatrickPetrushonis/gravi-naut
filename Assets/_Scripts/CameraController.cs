@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour 
 {
-    private Camera camera;
+    private Camera thisCamera;
     private GameObject player;
     private Transform target;
 
@@ -14,8 +14,8 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        camera = Camera.main;
-        camera.orthographicSize = defaultSize;
+        thisCamera = Camera.main;
+        thisCamera.orthographicSize = defaultSize;
         player = GameObject.Find("Player");
         target = player.transform;
     }
@@ -24,8 +24,8 @@ public class CameraController : MonoBehaviour
     {
         if(target)
         {
-            Vector3 point = camera.WorldToViewportPoint(target.position);
-            Vector3 delta = target.position - camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z));
+            Vector3 point = thisCamera.WorldToViewportPoint(target.position);
+            Vector3 delta = target.position - thisCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z));
             Vector3 destination = transform.position + delta;
             transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
         }

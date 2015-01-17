@@ -11,9 +11,10 @@ public class PlayerController : MonoBehaviour
     private Vector2 end;                    //destination for player movement
     private bool moving = false;            //whether a movement request is being fulfilled
 
-    public float moveSpeed = 1.5f;          //speed of player movement
-    public float distanceToGround;          //distance to check if player is grounded
+    private float distanceToGround;         //distance to check if player is grounded
+    private float moveSpeed = 1.5f;         //speed of player movement    
     private float precision = 0.1f;         //maximum allowable offset from exact destination
+    private float rotationSpeed = 5f;       //speed of reorientation
 
     void Start()
     {
@@ -26,29 +27,25 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        direction = gravityController.direction;        
+
         if(IsGrounded())
         {
             DetermineDestination();
-            if(moving)
-                MovePlayer();
+            if(moving) MovePlayer();
         }
-        else
-        {            
-            moving = false;                       
-        }
+        else moving = false;
 
+        OrientPlayer();
         ApplyGravity();
-    }
+    }    
 
     bool IsGrounded()
     {
         //cast ray down from current position to slightly beneath player
         RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.up, distanceToGround);
-
-        if(hit.collider != null)
-            return true;
-         
-        return false;
+        if(hit.collider != null) return true;         
+        else return false;
     }
 
     void DetermineDestination()
@@ -60,9 +57,6 @@ public class PlayerController : MonoBehaviour
         {
             end = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
             moving = true;
-
-            //determines gravity direction
-            direction = gravityController.direction;
 
             //limits movement to prevent undesired levitation
             if(direction.y != 0 && direction.x < 1)
@@ -86,11 +80,22 @@ public class PlayerController : MonoBehaviour
         rigidbody2D.velocity = moveDirection * moveSpeed;
     }
 
-    void EndMovement()
+    void OrientPlayer()
     {
-        end = start;
-        rigidbody2D.velocity = Vector2.zero;
-        moving = false;
+        Quaternion desiredOrient = new Quaternion();
+
+        //determine orientation by direction of gravity
+        if(direction.x == 0 && direction.y == -1)           //portrait
+            desiredOrient = Quaternion.Euler(0, 0, 0);
+        else if(direction.x == 0 && direction.y == 1)       //upside-down portrait
+            desiredOrient = Quaternion.Euler(0, 0, 180);
+        else if(direction.x == 1 && direction.y == 0)       //right landscape
+            desiredOrient = Quaternion.Euler(0, 0, 90);
+        else if(direction.x == -1 && direction.y == 0)      //left landscape
+            desiredOrient = Quaternion.Euler(0, 0, -90);
+
+        //rotate player from current rotation to new orientation
+        transform.rotation = Quaternion.Lerp(transform.rotation, desiredOrient, Time.deltaTime * rotationSpeed);
     }
 
     void ApplyGravity()
@@ -101,5 +106,12 @@ public class PlayerController : MonoBehaviour
         if(moving)
             if(gravityController.direction.x != direction.x || gravityController.direction.y != direction.y)
                 EndMovement();
+    }    
+
+    void EndMovement()
+    {
+        end = start;
+        rigidbody2D.velocity = Vector2.zero;
+        moving = false;
     }
 }
