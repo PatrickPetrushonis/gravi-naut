@@ -41,7 +41,7 @@ public class GravityController : MonoBehaviour
         }
 
         //initial force of gravity
-        player.rigidbody2D.AddForce(new Vector2(0, -1) * gravity);
+        if(player) player.rigidbody2D.AddForce(new Vector2(0, -1) * gravity);
     }
 
     void FixedUpdate()
@@ -79,22 +79,25 @@ public class GravityController : MonoBehaviour
 
     void ApplyGravity(Vector2 direction)
     {
-        playerVel = player.rigidbody2D.velocity;
-        playerMag = playerVel.magnitude;
+        if(player)
+        {
+            playerVel = player.rigidbody2D.velocity;
+            playerMag = playerVel.magnitude;
 
-        opposeDir = Vector2.zero;
-        opposeForce = 0;        
+            opposeDir = Vector2.zero;
+            opposeForce = 0;
 
-        if(playerMag > speedLimit)
-        { 
-            //calculate difference between player magnitude and limit
-            opposeDir = -direction;
-            opposeForce = playerMag - speedLimit;
+            if(playerMag > speedLimit)
+            {
+                //calculate difference between player magnitude and limit
+                opposeDir = -direction;
+                opposeForce = playerMag - speedLimit;
+            }
+
+            //overall force to be applied to character
+            //actual application is performed in CharacterController
+            totalForce = direction * gravity + opposeDir * opposeForce;
         }
-
-        //overall force to be applied to character
-        //actual application is performed in CharacterController
-        totalForce = direction * gravity + opposeDir * opposeForce;
 
         //to reduce calculations, non-player objects have no limit on velocity
         foreach(GameObject dynamicObj in dynamic)

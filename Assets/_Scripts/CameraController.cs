@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
     {
         thisCamera = Camera.main;
         thisCamera.orthographicSize = defaultSize;
+
         player = GameObject.Find("Player");
         target = player.transform;
     }

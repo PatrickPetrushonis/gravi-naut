@@ -4,43 +4,76 @@ using System.Collections;
 public class GameController : MonoBehaviour 
 {
     private GameObject gravityManager;
-    private GameObject player;
+    private GameObject player;    
+    private GUIStyle titleStyle = new GUIStyle();
+
     private bool paused = false;
+    private bool setting = false;
+    private bool quitting = false;
 
     void Start()
     {
         GameData.data.currentLevel = Application.loadedLevel;
         gravityManager = GameObject.Find("GravityManager");
-        player = GameObject.Find("Player");
+        if(player) player = GameObject.Find("Player");
+
+        titleStyle.alignment = TextAnchor.MiddleCenter;
+        titleStyle.fontSize = 48;
+        titleStyle.normal.textColor = Color.white;
     }
 
     void OnGUI()
     {
-        if(paused)
+        if(GameData.data.currentLevel == 0)
         {
-            if(GUI.Button(new Rect(UIData.leftIndent, UIData.topIndent - (UIData.height + UIData.margin), UIData.width, UIData.height), "Resume"))
+            if(setting)
             {
-                ResumeGame();
+                GUI.Label(new Rect(GameData.leftIndent, GameData.topIndent - (GameData.height + GameData.margin), GameData.width, GameData.height), "Volume", titleStyle);
+
+                GameData.data.volume = GUI.HorizontalSlider(new Rect(GameData.leftIndent, GameData.topIndent, GameData.width, GameData.height), GameData.data.volume, 0, 1);
+
+                if(GUI.Button(new Rect(GameData.leftIndent, GameData.topIndent + (GameData.height + GameData.margin), GameData.width, GameData.height), "Return"))
+                    setting = !setting;
             }
-            if(GUI.Button(new Rect(UIData.leftIndent, UIData.topIndent, UIData.width, UIData.height), "Restart"))
+            else if(quitting)
             {
-                ResetLevel();
+                GUI.Label(new Rect(GameData.leftIndent, GameData.topIndent - (GameData.height + GameData.margin), GameData.width, GameData.height), "Close Application?", titleStyle);
+
+                if(GUI.Button(new Rect(GameData.leftIndent, GameData.topIndent, GameData.width, GameData.height), "Yes"))
+                    CloseGame();
+                if(GUI.Button(new Rect(GameData.leftIndent, GameData.topIndent + (GameData.height + GameData.margin), GameData.width, GameData.height), "No"))
+                    quitting = false;
             }
-            if(GUI.Button(new Rect(UIData.leftIndent, UIData.topIndent + (UIData.height + UIData.margin), UIData.width, UIData.height), "Quit"))
+            else
             {
-                CloseGame();
+                if(GUI.Button(new Rect(GameData.leftIndent, GameData.topIndent - (GameData.height + GameData.margin), GameData.width, GameData.height), "Start"))
+                    LoadGame(1);
+                if(GUI.Button(new Rect(GameData.leftIndent, GameData.topIndent, GameData.width, GameData.height), "Settings"))
+                    setting = !setting;
+                if(GUI.Button(new Rect(GameData.leftIndent, GameData.topIndent + (GameData.height + GameData.margin), GameData.width, GameData.height), "Quit"))
+                    quitting = true;
             }
         }
         else 
         {
-            if(GUI.Button(UIData.pauseButton, ""))
+            if(!paused)
             {
-                PauseGame();
+                if(GUI.Button(GameData.pauseButton, ""))
+                    PauseGame();
+            }
+            else
+            {
+                if(GUI.Button(new Rect(GameData.leftIndent, GameData.topIndent - (GameData.height + GameData.margin), GameData.width, GameData.height), "Resume"))
+                    ResumeGame();
+                if(GUI.Button(new Rect(GameData.leftIndent, GameData.topIndent, GameData.width, GameData.height), "Restart"))
+                    ResetLevel();
+                if(GUI.Button(new Rect(GameData.leftIndent, GameData.topIndent + (GameData.height + GameData.margin), GameData.width, GameData.height), "Main Menu"))
+                    LoadGame(0);
             }
         }
     }
 
-    public void PauseGame()
+    void PauseGame()
     {
         paused = true;
         Time.timeScale = 0;
@@ -48,26 +81,26 @@ public class GameController : MonoBehaviour
         Input.gyro.enabled = false;
     }
 
-    public void ResumeGame()
+    void ResumeGame()
     {
         paused = false;
         Time.timeScale = 1;
         gravityManager.SetActive(true);
         Input.gyro.enabled = true;
-        player.rigidbody2D.velocity = Vector2.zero;
+        if(player) player.rigidbody2D.velocity = Vector2.zero;
     }
 
-    public void ResetLevel()
+    void ResetLevel()
     {
         Application.LoadLevel(GameData.data.currentLevel);
     }
 
-    public void LoadNextLevel()
+    void LoadGame(int level)
     {
-        Application.LoadLevel(GameData.data.currentLevel++);
+        Application.LoadLevel(level);
     }
 
-    public void CloseGame()
+    void CloseGame()
     {
         Application.Quit();
     }
