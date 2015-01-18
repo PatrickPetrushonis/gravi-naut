@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     private float distanceToGround;         //distance to check if player is grounded
     private float moveSpeed = 1.5f;         //speed of player movement    
     private float precision = 0.1f;         //maximum allowable offset from exact destination
-    private float rotationSpeed = 5f;       //speed of reorientation
+    private float rotationSpeed = 12.5f;    //speed of reorientation
 
     void Start()
     {
@@ -82,31 +82,38 @@ public class PlayerController : MonoBehaviour
 
     void OrientPlayer()
     {
-        Quaternion desiredOrient = new Quaternion();
-
-        //determine orientation by direction of gravity
-        if(direction.x == 0 && direction.y == -1)           //portrait
-            desiredOrient = Quaternion.Euler(0, 0, 0);
-        else if(direction.x == 0 && direction.y == 1)       //upside-down portrait
-            desiredOrient = Quaternion.Euler(0, 0, 180);
-        
-        else if(direction.x == -1 && direction.y == -1)     //between portrait & left landscape
-            desiredOrient = Quaternion.Euler(0, 0, -45);
-        else if(direction.x == 1 && direction.y == -1)      //between portrait & right landscape 
-            desiredOrient = Quaternion.Euler(0, 0, 45);
-
-        else if(direction.x == -1 && direction.y == 0)      //left landscape
-            desiredOrient = Quaternion.Euler(0, 0, -90);
-        else if(direction.x == 1 && direction.y == 0)       //right landscape
-            desiredOrient = Quaternion.Euler(0, 0, 90);
-
-        else if(direction.x == -1 && direction.y == 1)      //between upside-down portrait & left landscape
-            desiredOrient = Quaternion.Euler(0, 0, -135);        
-        else if(direction.x == 1 && direction.y == 1)       //between upside-down portrait & right landscape
-            desiredOrient = Quaternion.Euler(0, 0, 135);
+        Quaternion desiredOrient = DesiredOrientation();
 
         //rotate player from current rotation to new orientation
         transform.rotation = Quaternion.Lerp(transform.rotation, desiredOrient, Time.deltaTime * rotationSpeed);
+    }
+
+    Quaternion DesiredOrientation()
+    {
+        Quaternion orientation = new Quaternion();
+
+        //determine orientation by direction of gravity
+        if(direction.x == 0 && direction.y == -1)           //portrait
+            orientation = Quaternion.Euler(0, 0, 0);
+        else if(direction.x == 0 && direction.y == 1)       //upside-down portrait
+            orientation = Quaternion.Euler(0, 0, 180);
+
+        else if(direction.x == -1 && direction.y == -1)     //between portrait & left landscape
+            orientation = Quaternion.Euler(0, 0, -45);
+        else if(direction.x == 1 && direction.y == -1)      //between portrait & right landscape 
+            orientation = Quaternion.Euler(0, 0, 45);
+
+        else if(direction.x == -1 && direction.y == 0)      //left landscape
+            orientation = Quaternion.Euler(0, 0, -90);
+        else if(direction.x == 1 && direction.y == 0)       //right landscape
+            orientation = Quaternion.Euler(0, 0, 90);
+
+        else if(direction.x == -1 && direction.y == 1)      //between upside-down portrait & left landscape
+            orientation = Quaternion.Euler(0, 0, -135);
+        else if(direction.x == 1 && direction.y == 1)       //between upside-down portrait & right landscape
+            orientation = Quaternion.Euler(0, 0, 135);
+
+        return orientation;
     }
 
     void ApplyGravity()
