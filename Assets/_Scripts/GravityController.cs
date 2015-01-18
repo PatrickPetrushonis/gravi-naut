@@ -3,29 +3,29 @@ using System.Collections;
 
 public class GravityController : MonoBehaviour 
 {
-    private GameObject player;
-    private GameObject[] dynamic;       //all non-player objects affected by gravity
+    public GameObject player;
+    private GameObject[] dynamic;           //all non-player objects affected by gravity
     private Gyroscope gyro;
 
-    public float gravity = 3f;          //force of gravity
-    private float threshold = 0.95f;    //minimum input required to effect gravity
+    public float gravity = 3f;              //force of gravity
+    private float threshold = 0.95f;        //minimum input required to effect gravity
 
-    public Vector2 direction;           //current direction of gravity
-    private float horizontal;           //absolute value for x and y axes of direction
+    public Vector2 direction;               //current direction of gravity
+    private float horizontal;               //absolute value for x and y axes of direction
     private float vertical;              
 
-    private Vector2 playerVel;          //current player velocity
-    private float playerMag;            //magnitude of current velocity
-    private float speedLimit = 2;       //maximum total velocity
-    private float opposeForce;          //difference between current velocity magnitude and speed limit
-    private Vector2 opposeDir;          //opposite direction of current force of gravity
-    public Vector2 totalForce;          //total combination of all forces to act on player
+    private Vector2 playerVel;              //current player velocity
+    private float playerMag;                //magnitude of current velocity
+    private const float speedLimit = 2;     //maximum total velocity
+    private float opposeForce;              //difference between current velocity magnitude and speed limit
+    private Vector2 opposeDir;              //opposite direction of current force of gravity
+    public Vector2 totalForce;              //total combination of all forces to act on player
 
-    private Vector2 currentAcc;         //current acceleration of device calculated with Lerp
-    private float sensitivityH = 5f;    //sensitivity of horizontal and vertical axes
-    private float sensitivityV = 5f;
-    private float smooth = 2.5f;        //smoothing factor in Lerp calculation
-    private float getAxisH = 0f;        //current horizontal and vertical axes input
+    private Vector2 currentAcc;             //current acceleration of device calculated with Lerp
+    private const float sensitivityH = 5f;  //sensitivity of horizontal and vertical axes
+    private const float sensitivityV = 5f;
+    private const float smooth = 2.5f;      //smoothing factor in Lerp calculation
+    private float getAxisH = 0f;            //current horizontal and vertical axes input
     private float getAxisV = 0f;
     
     void Start()

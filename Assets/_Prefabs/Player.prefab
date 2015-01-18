@@ -68,8 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1accf0aeb78d2ea4f86012d08111c30a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1.5
-  distanceToGround: 0
+  gravityManager: {fileID: 196250, guid: 7ebfc8cd752649b479f6a3a6be561d55, type: 2}
 --- !u!212 &21242072
 SpriteRenderer:
   m_ObjectHideFlags: 1

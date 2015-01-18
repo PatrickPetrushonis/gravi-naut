@@ -6,15 +6,15 @@ public class PlayerController : MonoBehaviour
     private GameObject gravityManager;
     private GravityController gravityController;
 
-    private Vector2 direction;              //direction of gravity upon movement request
-    private Vector2 start;                  //starting position during a movement request
-    private Vector2 end;                    //destination for player movement
-    private bool moving = false;            //whether a movement request is being fulfilled
+    private Vector2 direction;                      //direction of gravity upon movement request
+    private Vector2 start;                          //starting position during a movement request
+    private Vector2 end;                            //destination for player movement
+    private bool moving = false;                    //whether a movement request is being fulfilled
 
-    private float distanceToGround;         //distance to check if player is grounded
-    private float moveSpeed = 1.5f;         //speed of player movement    
-    private float precision = 0.1f;         //maximum allowable offset from exact destination
-    private float rotationSpeed = 12.5f;    //speed of reorientation
+    private float distanceToGround;                 //distance to check if player is grounded
+    private const float moveSpeed = 1.5f;           //speed of player movement    
+    private const float precision = 0.1f;           //maximum allowable offset from exact destination
+    private const float rotationSpeed = 12.5f;      //speed of reorientation
 
     void Start()
     {
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
         distanceToGround = collider2D.bounds.extents.y + 0.1f;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         direction = gravityController.direction;
 

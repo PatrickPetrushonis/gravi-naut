@@ -9,19 +9,18 @@ public class CameraController : MonoBehaviour
 
     private Vector3 velocity = Vector3.zero;
     public float dampTime = 0.25f;
-    public float defaultSize = 1.5f;
-    public float pauseSize = 5f;
+    public float orthoSize = 2f;
 
     void Start()
     {
         thisCamera = Camera.main;
-        thisCamera.orthographicSize = defaultSize;
+        thisCamera.orthographicSize = orthoSize;
 
         player = GameObject.Find("Player");
         target = player.transform;
     }
 
-    void Update()
+    void LateUpdate()
     {
         if(target)
         {

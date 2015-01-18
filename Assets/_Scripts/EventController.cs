@@ -3,24 +3,39 @@ using System.Collections;
 
 public class EventController : MonoBehaviour 
 {
-    private GameObject[] collectibles;
-    private GameObject eventObject;
-    private string objectName;    
+    public GameObject gameManager;
+    private GameController control;
+
+    public GameObject[] eventObjects = new GameObject[2];
 
     void Start()
     {
-        if(Application.loadedLevel == 0)
-            objectName = "Cage";
+        control = gameManager.GetComponent<GameController>();
 
-        eventObject = GameObject.Find(objectName);
+        GameData.data.collectibleTotal = GameObject.FindGameObjectsWithTag("Collectible").Length;
+        GameData.data.eventTotal = GameObject.FindGameObjectsWithTag("Event").Length;
+
+        GameData.data.collectibleCount = 0;
+        GameData.data.eventCount = 0;
     }
 
     void Update()
     {
         if(GameData.data.collectibleCount >= GameData.data.collectibleTotal)
         {
-            if(Application.loadedLevel == 0)
-                Destroy(eventObject);
-        } 
+            if(GameData.data.currentLevel == 1)
+            {
+                Destroy(eventObjects[0]);
+            }                
+        }
+
+        if(GameData.data.eventCount >= GameData.data.eventTotal)
+        {
+            control.complete = true;
+        }
+        else
+        {
+            control.complete = false;
+        }
     }
 }

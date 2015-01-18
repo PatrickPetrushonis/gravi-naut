@@ -8,7 +8,6 @@ public class CollectOnTouch : MonoBehaviour
     void Start()
     {        
         thisCollider = gameObject.GetComponent<Collider2D>();
-        GameData.data.collectibleTotal++;
 
         if(!thisCollider.isTrigger)
             thisCollider.isTrigger = true;
