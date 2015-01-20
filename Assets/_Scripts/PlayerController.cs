@@ -3,52 +3,41 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour 
 {
-    private GameObject gravityManager;
-    private GravityController gravityController;
+    public Transform groundCheck;                   //location of overlap circle for ground check
+    public LayerMask groundIdentity;                //which layers are considered ground 
 
     private Vector2 direction;                      //direction of gravity upon movement request
     private Vector2 start;                          //starting position during a movement request
     private Vector2 end;                            //destination for player movement
-    private bool moving = false;                    //whether a movement request is being fulfilled
 
-    private float distanceToGround;                 //distance to check if player is grounded
+    private bool moving = false;                    //whether a movement request is being fulfilled
+    private bool grounded = false;                  //whether player is in contact with the ground
+    private bool facingRight = true;                //whether player is facing right or left
+
     private const float moveSpeed = 1.5f;           //speed of player movement    
     private const float precision = 0.1f;           //maximum allowable offset from exact destination
-    private const float rotationSpeed = 12.5f;      //speed of reorientation
+    private const float rotationSpeed = 3f;         //speed of reorientation
+    private const float checkRadius = 0.2f;         //distance to check for ground
 
-    void Start()
+    void Update()
     {
-        gravityManager = GameObject.Find("GravityManager");
-        gravityController = gravityManager.GetComponent<GravityController>();
+        direction = GameData.data.direction;
+        OrientPlayer();
 
-        end = transform.position;
-        distanceToGround = collider2D.bounds.extents.y + 0.1f;
+        if(grounded) 
+            DetermineAction();
+        else 
+            moving = false;
     }
 
     void FixedUpdate()
     {
-        direction = gravityController.direction;
+        grounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundIdentity);
+        rigidbody2D.AddForce(GameData.data.gravity * GameData.data.direction);
+        if(moving) Move();
+    } 
 
-        if(IsGrounded())
-        {
-            DetermineDestination();
-            if(moving) MovePlayer();
-        }
-        else moving = false;
-
-        OrientPlayer();
-        ApplyGravity();
-    }    
-
-    bool IsGrounded()
-    {
-        //cast ray down from current position to slightly beneath player
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.up, distanceToGround);
-        if(hit.collider != null) return true;         
-        else return false;
-    }
-
-    void DetermineDestination()
+    void DetermineAction()
     {
         start = transform.position;
 
@@ -56,75 +45,70 @@ public class PlayerController : MonoBehaviour
         if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             end = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-            moving = true;
-
-            //limits movement to prevent undesired levitation
-            if(direction.y != 0 && direction.x < 1)
-                end.y = transform.position.y;
-            else if(direction.x != 0 && direction.y < 1)
-                end.x = transform.position.x;
+            moving = true;        
         }
     }
 
-    void MovePlayer()
+    void Move()
     {
+        Vector2 moveDirection = MoveDirection();
+        
         //to prevent jittering, check to see if current position is within acceptable bounds of end position
-        if(start.x > end.x - precision && start.x < end.x + precision)
-            if(start.y > end.y - precision && start.y < end.y + precision)
-            {
-                EndMovement();
-                return;
-            }
+        if(Vector2.Distance(start, end) <= precision)
+        {
+            EndMovement();
+            return;
+        }
+
+        if(facingRight)
+        {
+            if((direction.y == -1 && moveDirection.x == -1) || (direction.y == 1 && moveDirection.x == 1) || (direction.x == -1 && moveDirection.y == 1) || (direction.x == 1 && moveDirection.y == -1))
+                Flip();
+        }
+        else if(!facingRight)
+        {
+            if((direction.y == -1 && moveDirection.x == 1) || (direction.y == 1 && moveDirection.x == -1) || (direction.x == -1 && moveDirection.y == -1) || (direction.x == 1 && moveDirection.y == 1))
+                Flip();
+        }
+
+        rigidbody2D.velocity = moveDirection * moveSpeed;
+    }
+
+    Vector2 MoveDirection()
+    {
+        //float horizontal = Mathf.Abs(direction.x);
+        //float vertical = Mathf.Abs(direction.y);
+
+        //limits movement to prevent undesired levitation
+        if(direction.y != 0 && direction.x < 1) end.y = transform.position.y;
+        if(direction.x != 0 && direction.y < 1) end.x = transform.position.x;
 
         Vector2 moveDirection = (end - start).normalized;
-        rigidbody2D.velocity = moveDirection * moveSpeed;
+        return moveDirection;
+    }
+
+    void Flip()
+    {
+        facingRight = !facingRight;
+
+        Vector3 theScale = transform.localScale;
+        theScale.x = -theScale.x;
+        transform.localScale = theScale;
     }
 
     void OrientPlayer()
     {
-        Quaternion desiredOrient = DesiredOrientation();
+        //calculate the difference between global up and desired direction
+        float angle = Vector3.Angle(Vector3.up, -direction);
+
+        //invert angle when gravity along x-axis is negative
+        if(direction.x < 0) angle = -angle;
+
+        Quaternion orientation = Quaternion.Euler(0, 0, angle);
 
         //rotate player from current rotation to new orientation
-        transform.rotation = Quaternion.Lerp(transform.rotation, desiredOrient, Time.deltaTime * rotationSpeed);
-    }
-
-    Quaternion DesiredOrientation()
-    {
-        Quaternion orientation = new Quaternion();
-
-        //determine orientation by direction of gravity
-        if(direction.x == 0 && direction.y == -1)           //portrait
-            orientation = Quaternion.Euler(0, 0, 0);
-        else if(direction.x == 0 && direction.y == 1)       //upside-down portrait
-            orientation = Quaternion.Euler(0, 0, 180);
-
-        else if(direction.x == -1 && direction.y == -1)     //between portrait & left landscape
-            orientation = Quaternion.Euler(0, 0, -45);
-        else if(direction.x == 1 && direction.y == -1)      //between portrait & right landscape 
-            orientation = Quaternion.Euler(0, 0, 45);
-
-        else if(direction.x == -1 && direction.y == 0)      //left landscape
-            orientation = Quaternion.Euler(0, 0, -90);
-        else if(direction.x == 1 && direction.y == 0)       //right landscape
-            orientation = Quaternion.Euler(0, 0, 90);
-
-        else if(direction.x == -1 && direction.y == 1)      //between upside-down portrait & left landscape
-            orientation = Quaternion.Euler(0, 0, -135);
-        else if(direction.x == 1 && direction.y == 1)       //between upside-down portrait & right landscape
-            orientation = Quaternion.Euler(0, 0, 135);
-
-        return orientation;
-    }
-
-    void ApplyGravity()
-    {
-        rigidbody2D.AddForce(gravityController.totalForce);
-
-        //sudden change in gravity will prevent further movement
-        if(moving)
-            if(gravityController.direction.x != direction.x || gravityController.direction.y != direction.y)
-                EndMovement();
-    }    
+        transform.rotation = Quaternion.Lerp(transform.rotation, orientation, Time.deltaTime * rotationSpeed);
+    } 
 
     void EndMovement()
     {
