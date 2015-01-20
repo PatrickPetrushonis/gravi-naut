@@ -4,54 +4,41 @@ using System.Collections;
 public class GameController : MonoBehaviour 
 {
     public GameObject gravityManager;
-    private GameObject player;
-
-    public bool paused = false;
-    public bool setting = false;
-    public bool quitting = false;
-    public bool complete = false;
+    public GameObject player;
 
     void Start()
     {
-        GameData.data.currentLevel = Application.loadedLevel;        
-        if(player) player = GameObject.Find("Player");
+        GameData.data.currentLevel = Application.loadedLevel;
     }
 
-    public void Setting()
+    void Update()
     {
-        setting = !setting;
+        if(GameData.data.pause) PauseGame();
+        else ResumeGame();
     }
 
-    public void PauseGame()
+    void PauseGame()
     {
-        paused = true;
         Time.timeScale = 0;
         gravityManager.SetActive(false);
         Input.gyro.enabled = false;
     }
 
-    public void ResumeGame()
+    void ResumeGame()
     {
-        paused = false;
         Time.timeScale = 1;
         gravityManager.SetActive(true);
         Input.gyro.enabled = true;
         if(player) player.rigidbody2D.velocity = Vector2.zero;
     }
 
-    public void ResetLevel()
-    {
-        Application.LoadLevel(GameData.data.currentLevel);
-    }
-
     public void LoadGame(int level)
     {
-        GameData.data.currentLevel = level;
-        Application.LoadLevel(level);
-    }
+        GameData.data.quit = false;
+        GameData.data.pause = false;
+        GameData.data.complete = false;
 
-    public void CloseGame()
-    {
-        Application.Quit();
+        if(level == -1) Application.Quit();
+        else Application.LoadLevel(level);
     }
 }

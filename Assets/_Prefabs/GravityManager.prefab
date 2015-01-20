@@ -39,9 +39,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fabc4a6f9d37a343a25ecf390e280f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: 3
-  direction: {x: 0, y: 0}
-  totalForce: {x: 0, y: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

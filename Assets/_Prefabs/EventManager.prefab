@@ -39,10 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff01c0d2b198eb4bb9fb63e69528408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 187320, guid: 4f6891cc1c7dadb498f75f1dbbee169b, type: 2}
-  eventObjects:
-  - {fileID: 0}
-  - {fileID: 0}
+  eventObjects: []
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

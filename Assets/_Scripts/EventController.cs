@@ -3,14 +3,14 @@ using System.Collections;
 
 public class EventController : MonoBehaviour 
 {
-    public GameObject gameManager;
-    private GameController control;
+    public GameObject[] eventObjects;
 
-    public GameObject[] eventObjects = new GameObject[2];
+    private PoolController pool;
+    private bool eventTrigger = false;
 
     void Start()
     {
-        control = gameManager.GetComponent<GameController>();
+        pool = GameObject.Find("PoolManager").GetComponent<PoolController>();
 
         GameData.data.collectibleTotal = GameObject.FindGameObjectsWithTag("Collectible").Length;
         GameData.data.eventTotal = GameObject.FindGameObjectsWithTag("Event").Length;
@@ -23,19 +23,27 @@ public class EventController : MonoBehaviour
     {
         if(GameData.data.collectibleCount >= GameData.data.collectibleTotal)
         {
-            if(GameData.data.currentLevel == 1)
+            if(GameData.data.currentLevel == 1 && !eventTrigger)
             {
-                Destroy(eventObjects[0]);
+                eventTrigger = true;
+                StartCoroutine(Spawn());
             }                
         }
 
         if(GameData.data.eventCount >= GameData.data.eventTotal)
-        {
-            control.complete = true;
-        }
+            GameData.data.complete = true;
         else
+            GameData.data.complete = false;
+    }
+
+    IEnumerator Spawn()
+    {
+        for(int x = 0; x < pool.pooledAmount; x++)
         {
-            control.complete = false;
+            pool.Spawn();
+            yield return new WaitForSeconds(1.5f);
         }
+
+        yield return null;
     }
 }

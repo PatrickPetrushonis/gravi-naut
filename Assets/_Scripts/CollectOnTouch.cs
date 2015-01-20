@@ -18,7 +18,7 @@ public class CollectOnTouch : MonoBehaviour
         if(other.gameObject.tag == "Player")
         {
             GameData.data.collectibleCount++;
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

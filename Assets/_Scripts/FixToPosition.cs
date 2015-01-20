@@ -18,7 +18,12 @@ public class FixToPosition : MonoBehaviour
         {
             Vector2 start = placed.transform.position;
             Vector2 moveDirection = (end - start).normalized;
-            placed.rigidbody2D.velocity = moveDirection;
+
+            if(Vector3.Distance(start, end) > precision)
+            {
+                placed.rigidbody2D.velocity = moveDirection;
+                placed.transform.rotation = Quaternion.Lerp(placed.transform.rotation, transform.rotation, Time.deltaTime);
+            }
         }
     }
 

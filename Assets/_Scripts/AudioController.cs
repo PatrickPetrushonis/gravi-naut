@@ -12,13 +12,12 @@ public class AudioController : MonoBehaviour
     {
         sources = AudioSource.FindObjectsOfType<AudioSource>();
 
-        //Temporary solution on Save & Load are implemented
-        GameData.data.volume = 0.5f;
+        GameData.data.volume = 0.5f;        //Temporary solution until Save & Load are implemented
     }
 
     void Update()
     {
-        if(sources.Length > 0)
+        if(sources.Length > 0)              //Only necessary until audio files are included
         {
             if(GameData.data.currentLevel == 0)
             {
