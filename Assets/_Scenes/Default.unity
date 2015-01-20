@@ -1586,7 +1586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dampTime: .25
-  orthoSize: 3
+  orthoSize: 5
 --- !u!1 &851975766
 GameObject:
   m_ObjectHideFlags: 0

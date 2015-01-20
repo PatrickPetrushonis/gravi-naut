@@ -5,6 +5,7 @@ public class MenuController : MonoBehaviour
 {
     private GameController control;
     private GUIStyle titleStyle = new GUIStyle();
+    private GUIStyle labelStyle = new GUIStyle();
 
     private const float width = 400;
     private const float height = 100;
@@ -22,6 +23,10 @@ public class MenuController : MonoBehaviour
         titleStyle.alignment = TextAnchor.MiddleCenter;
         titleStyle.fontSize = 48;
         titleStyle.normal.textColor = Color.white;
+
+        labelStyle.alignment = TextAnchor.MiddleLeft;
+        labelStyle.fontSize = 36;
+        labelStyle.normal.textColor = Color.white;
     }
 
     void OnGUI()
@@ -47,9 +52,11 @@ public class MenuController : MonoBehaviour
     {
         if(setting)
         {
-            GUI.Label(new Rect(leftIndent, topIndent - (height + margin), width, height), "Volume", titleStyle);
+            GUI.Label(new Rect(leftIndent, topIndent - (height + margin), width, height), "Settings", titleStyle);
 
-            GameData.data.volume = GUI.HorizontalSlider(new Rect(leftIndent, topIndent, width, height), GameData.data.volume, 0, 1);
+            GUI.Label(new Rect(leftIndent, topIndent, width, height), "Volume", labelStyle);
+
+            GameData.data.volume = GUI.HorizontalSlider(new Rect(leftIndent + width, topIndent, width, height), GameData.data.volume, 0, 1);
 
             if(GUI.Button(new Rect(leftIndent, topIndent + (height + margin), width, height), "Return"))
                 setting = false;
@@ -65,6 +72,8 @@ public class MenuController : MonoBehaviour
         }
         else
         {
+            GUI.Label(new Rect(leftIndent, topIndent - (height + margin) * 2, width, height), "Gravinaut", titleStyle);
+
             if(GUI.Button(new Rect(leftIndent, topIndent - (height + margin), width, height), "Start"))
                 control.LoadGame(1);
             if(GUI.Button(new Rect(leftIndent, topIndent, width, height), "Settings"))
@@ -80,7 +89,7 @@ public class MenuController : MonoBehaviour
         {
             GUI.Label(new Rect(leftIndent, topIndent - (height + margin), width, height), "Are You Sure?", titleStyle);
 
-            if(GUI.Button(new Rect(leftIndent, topIndent, width, height), "Yes"))
+            if(GUI.Button(new Rect(leftIndent, topIndent, width, height), "Yes", labelStyle))
                 control.LoadGame(0);
             if(GUI.Button(new Rect(leftIndent, topIndent + (height + margin), width, height), "No"))
                 GameData.data.quit = false;

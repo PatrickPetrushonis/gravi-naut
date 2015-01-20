@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
 
     private Vector3 velocity = Vector3.zero;
     public float dampTime = 0.25f;
-    public float orthoSize = 2.5f;
+    public float orthoSize = 5f;
 
     void Start()
     {
