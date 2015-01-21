@@ -34,11 +34,14 @@ public class GameController : MonoBehaviour
 
     public void LoadGame(int level)
     {
-        GameData.data.quit = false;
-        GameData.data.pause = false;
-        GameData.data.complete = false;
+        if(GameData.data.pause) GameData.data.pause = false;
+        if(GameData.data.complete) GameData.data.complete = false;
 
-        if(level == -1) Application.Quit();
-        else Application.LoadLevel(level);
+        if(level == -1) 
+            Application.Quit();
+        else if(level == -2)
+            Application.LoadLevel(Application.loadedLevel);
+        else 
+            Application.LoadLevel(level);            
     }
 }

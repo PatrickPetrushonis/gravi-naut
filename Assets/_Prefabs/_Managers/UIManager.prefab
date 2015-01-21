@@ -39,13 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca4a469f912dff341a055d7095abf620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 155410, guid: eb10eb423aad3d74e8d3f2a10f3a9470, type: 2}
-  main: {fileID: 0}
-  select: {fileID: 0}
-  setting: {fileID: 0}
-  close: {fileID: 0}
   volume: {fileID: 0}
-  newVolume: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

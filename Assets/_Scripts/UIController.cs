@@ -1,36 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class UIController : MonoBehaviour 
 {
     private GameController control;
 
-    public GameObject main;
-    public GameObject select;
-    public GameObject setting;
-    public GameObject close;
-    public GameObject pause;
-    public GameObject hud;
-
-    private Slider volume;
+    public Button pause;
+    public Slider volume;
     private float newVolume;
 
     void Start()
     {
         control = GameObject.Find("GameManager").GetComponent<GameController>();
-
-        if(!setting.activeSelf) setting.SetActive(true);
-
-        volume = setting.transform.FindChild("VolumeSlider").GetComponent<Slider>();
         newVolume = volume.value;
         GameData.data.volume = newVolume;
-
-        if(GameData.data.currentLevel != 0) main.SetActive(false);
-        select.SetActive(false);
-        setting.SetActive(false);
-        close.SetActive(false);
-    }
+    }    
 
     public void DeactivateMenu(GameObject parent)
     {
@@ -49,9 +35,6 @@ public class UIController : MonoBehaviour
 
     public void Apply(bool apply)
     {
-        setting.SetActive(false);
-        main.SetActive(true);
-
         if(apply)
         {
             newVolume = volume.value;
@@ -59,5 +42,11 @@ public class UIController : MonoBehaviour
         }
         else
             volume.value = newVolume;
+    }
+
+    public void Pause()
+    {
+        pause.interactable = !pause.interactable;
+        GameData.data.pause = !GameData.data.pause;
     }
 }

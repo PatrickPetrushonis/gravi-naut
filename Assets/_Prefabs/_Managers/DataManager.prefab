@@ -48,8 +48,8 @@ MonoBehaviour:
   volume: 0
   gravity: 0
   direction: {x: 0, y: 0}
-  quit: 0
   pause: 0
+  quit: 0
   complete: 0
 --- !u!1001 &100100000
 Prefab:

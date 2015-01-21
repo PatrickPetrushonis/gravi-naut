@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &123108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 423108}
+  - 58: {fileID: 5802702}
+  - 114: {fileID: 11484550}
+  m_Layer: 8
+  m_Name: InteractCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &142072
 GameObject:
   m_ObjectHideFlags: 0
@@ -36,6 +53,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &423108
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 123108}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -.25, y: -.100000001, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 442072}
+  m_RootOrder: 1
 --- !u!4 &442072
 Transform:
   m_ObjectHideFlags: 1
@@ -47,6 +76,7 @@ Transform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 459914}
+  - {fileID: 423108}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &459914
@@ -72,10 +102,21 @@ Rigidbody2D:
   m_AngularDrag: .0500000007
   m_GravityScale: 0
   m_FixedAngle: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
+--- !u!58 &5802702
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 123108}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Radius: .200000003
+  m_Center: {x: 0, y: 0}
 --- !u!58 &5833990
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -124,10 +165,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1accf0aeb78d2ea4f86012d08111c30a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactCheck: {fileID: 123108}
   groundCheck: {fileID: 459914}
   groundIdentity:
     serializedVersion: 2
     m_Bits: 4294967039
+--- !u!114 &11484550
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 123108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e38a48996ccbe841aa16af885e919b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactIdentity:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!212 &21242072
 SpriteRenderer:
   m_ObjectHideFlags: 1

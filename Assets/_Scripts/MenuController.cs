@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MenuController : MonoBehaviour 
+public class MenuController : MonoBehaviour
 {
     private GameController control;
     private GUIStyle titleStyle = new GUIStyle();
@@ -28,7 +28,7 @@ public class MenuController : MonoBehaviour
         labelStyle.fontSize = 36;
         labelStyle.normal.textColor = Color.white;
     }
-
+    
     void OnGUI()
     {
         if(GameData.data.currentLevel == 0)
@@ -52,8 +52,6 @@ public class MenuController : MonoBehaviour
     {
         if(setting)
         {
-            GUI.Label(new Rect(leftIndent, topIndent - (height + margin), width, height), "Settings", titleStyle);
-
             GUI.Label(new Rect(leftIndent, topIndent, width, height), "Volume", labelStyle);
 
             GameData.data.volume = GUI.HorizontalSlider(new Rect(leftIndent + width, topIndent, width, height), GameData.data.volume, 0, 1);

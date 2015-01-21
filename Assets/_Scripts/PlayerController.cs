@@ -3,36 +3,49 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour 
 {
-    public Transform groundCheck;                   //location of overlap circle for ground check
-    public LayerMask groundIdentity;                //which layers are considered ground 
+    private InteractCheck interactCheck;
 
-    private Vector2 direction;                      //direction of gravity upon movement request
-    private Vector2 start;                          //starting position during a movement request
-    private Vector2 end;                            //destination for player movement
+    public Transform groundCheck;                       //location of overlap circle for ground check    
+    public LayerMask groundIdentity;                    //which layers are considered ground 
 
-    private bool moving = false;                    //whether a movement request is being fulfilled
-    private bool grounded = false;                  //whether player is in contact with the ground
-    private bool facingRight = true;                //whether player is facing right or left
+    private Vector2 direction;                          //direction of gravity upon movement request
+    private Vector2 start;                              //starting position during a movement request
+    private Vector2 end;                                //destination for player movement
 
-    private const float moveSpeed = 1.5f;           //speed of player movement    
-    private const float precision = 0.1f;           //maximum allowable offset from exact destination
-    private const float rotationSpeed = 3f;         //speed of reorientation
-    private const float checkRadius = 0.2f;         //distance to check for ground
+    private bool moving = false;                        //whether a movement request is being fulfilled
+    private bool grounded = false;                      //whether player is in contact with the ground
+    private bool interacting = false;                   //whether an object is being interacted with
+    private bool facingRight = false;                   //whether player is facing right or left
+
+    private const float moveSpeed = 2f;                 //speed of player movement    
+    private const float precision = 0.1f;               //maximum allowable offset from exact destination
+    private const float rotationSpeed = 3f;             //speed of reorientation
+    private const float groundCheckRadius = 0.2f;       //distance to check for ground
+    private const float interactCheckRadius = 0.75f;    //distance an object can be interacted with
+    private const float interactDownTime = 0.25f;    //
+
+    private float timeSinceInteract;
+
+    void Start()
+    {
+        interactCheck = transform.FindChild("InteractCheck").GetComponent<InteractCheck>();
+        timeSinceInteract = Time.time;
+
+        if(transform.localScale.x < 0) facingRight = true;
+    }
 
     void Update()
     {
         direction = GameData.data.direction;
         OrientPlayer();
 
-        if(grounded) 
-            DetermineAction();
-        else 
-            moving = false;
+        if(grounded) DetermineAction();
+        else moving = false;
     }
 
     void FixedUpdate()
     {
-        grounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundIdentity);
+        grounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundIdentity);
         rigidbody2D.AddForce(GameData.data.gravity * GameData.data.direction);
         if(moving) Move();
     } 
@@ -45,7 +58,39 @@ public class PlayerController : MonoBehaviour
         if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             end = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
-            moving = true;        
+
+            if((Vector2.Distance(interactCheck.transform.position, end) < interactCheckRadius) & interactCheck.canInteract)
+            {
+                Interact();
+            }
+            else 
+            {
+                moving = true;
+            }
+        }
+    }
+
+    void Interact()
+    {
+        if(Time.time > timeSinceInteract + interactDownTime)
+        {
+            if(interacting)
+            {
+                //return object to former state, thus dropping it
+                interacting = false;
+                interactCheck.interactiveObject.rigidbody2D.isKinematic = false;
+                interactCheck.interactiveObject.transform.parent = null;
+            }
+            else
+            {
+                //fix the object to the player
+                interacting = true;
+                interactCheck.interactiveObject.rigidbody2D.isKinematic = true;
+                interactCheck.interactiveObject.transform.parent = transform;
+                interactCheck.interactiveObject.transform.position = new Vector2(interactCheck.transform.position.x + 0.3f, interactCheck.transform.position.y);
+            }
+
+            timeSinceInteract = Time.time;
         }
     }
 

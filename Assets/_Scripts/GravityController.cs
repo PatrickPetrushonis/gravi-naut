@@ -11,7 +11,7 @@ public class GravityController : MonoBehaviour
     private float getAxisH = 0f;            //current horizontal and vertical axes input
     private float getAxisV = 0f;
 
-    private const float gravity = 3f;       //force of gravity
+    private const float gravity = 5f;       //force of gravity
     private const float threshold = 0.9f;  //minimum input required to effect gravity
     private const float sensitivityH = 5f;  //sensitivity of horizontal and vertical axes
     private const float sensitivityV = 5f;

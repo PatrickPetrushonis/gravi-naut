@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82b6348f50b7515408bbf15489883a65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityManager: {fileID: 196250, guid: 7ebfc8cd752649b479f6a3a6be561d55, type: 2}
+  gravityManager: {fileID: 0}
   player: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:

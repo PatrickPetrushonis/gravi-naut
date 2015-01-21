@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class PoolController : MonoBehaviour 
 {    
-    public GameObject spawner;
+    public Transform spawner;
     public GameObject pooledObject;    
     public int pooledAmount = 3;
 

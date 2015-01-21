@@ -4,7 +4,6 @@ using System.Collections;
 public class EventController : MonoBehaviour 
 {
     public GameObject[] eventObjects;
-
     private PoolController pool;
     private bool eventTrigger = false;
 
@@ -21,19 +20,32 @@ public class EventController : MonoBehaviour
 
     void Update()
     {
-        if(GameData.data.collectibleCount >= GameData.data.collectibleTotal)
+        if(GameData.data.currentLevel == 1)
         {
-            if(GameData.data.currentLevel == 1 && !eventTrigger)
+            if(GameData.data.collectibleCount >= GameData.data.collectibleTotal)
             {
-                eventTrigger = true;
-                StartCoroutine(Spawn());
-            }                
-        }
+                if(!eventTrigger)
+                {
+                    eventTrigger = true;
+                    StartCoroutine(Spawn());
+                }
+            }
+            else
+            {
+                GameData.data.objective = "Collect orbs to trigger spawner.";
+            }
 
-        if(GameData.data.eventCount >= GameData.data.eventTotal)
-            GameData.data.complete = true;
-        else
-            GameData.data.complete = false;
+            if(GameData.data.eventCount >= GameData.data.eventTotal)
+            {
+                GameData.data.complete = true;
+                GameData.data.objective = "Congratulations!";
+            }
+            else
+            {
+                GameData.data.complete = false;
+                GameData.data.objective = "Set cubes onto holders.";
+            }                
+        }            
     }
 
     IEnumerator Spawn()

@@ -17,9 +17,9 @@ public class GameData : MonoBehaviour
     
     public float gravity;
     public Vector2 direction;
-
-    public bool quit;
+    
     public bool pause;
+    public bool quit;
     public bool complete;    
 
     void Awake()

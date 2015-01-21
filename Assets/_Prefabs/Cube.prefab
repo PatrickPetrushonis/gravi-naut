@@ -12,8 +12,8 @@ GameObject:
   - 61: {fileID: 6153542}
   - 50: {fileID: 5053542}
   - 114: {fileID: 11438670}
-  m_Layer: 0
-  m_Name: Crate
+  m_Layer: 9
+  m_Name: Cube
   m_TagString: Dynamic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
