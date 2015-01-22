@@ -1785,6 +1785,22 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11496250, guid: 7ebfc8cd752649b479f6a3a6be561d55, type: 2}
+      propertyPath: leftLand
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496250, guid: 7ebfc8cd752649b479f6a3a6be561d55, type: 2}
+      propertyPath: up
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496250, guid: 7ebfc8cd752649b479f6a3a6be561d55, type: 2}
+      propertyPath: left
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496250, guid: 7ebfc8cd752649b479f6a3a6be561d55, type: 2}
+      propertyPath: right
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7ebfc8cd752649b479f6a3a6be561d55, type: 2}
   m_RootGameObject: {fileID: 1167111457}
@@ -4762,6 +4778,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fabc4a6f9d37a343a25ecf390e280f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  down: 1
+  up: 0
+  left: 0
+  right: 0
 --- !u!1 &1184043710
 GameObject:
   m_ObjectHideFlags: 0

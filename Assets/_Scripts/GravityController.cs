@@ -12,11 +12,16 @@ public class GravityController : MonoBehaviour
     private float getAxisV = 0f;
 
     private const float gravity = 5f;       //force of gravity
-    private const float threshold = 0.9f;  //minimum input required to effect gravity
+    private const float threshold = 0.9f;   //minimum input required to effect gravity
     private const float sensitivityH = 5f;  //sensitivity of horizontal and vertical axes
     private const float sensitivityV = 5f;
     private const float smooth = 2.5f;      //smoothing factor in Lerp calculation
-    
+
+    public bool down = true;                //directions in which gravity can be applied
+    public bool up = true;                              
+    public bool left = true;
+    public bool right = true;
+
     void Start()
     {
         if(SystemInfo.supportsGyroscope)
@@ -30,6 +35,7 @@ public class GravityController : MonoBehaviour
     void FixedUpdate()
     {
         DetermineDirection();
+        LimitDirection();
         GameData.data.gravity = gravity;
         GameData.data.direction = direction;
     }
@@ -47,10 +53,66 @@ public class GravityController : MonoBehaviour
         float vertical = Mathf.Abs(direction.y);        
 
         //define range in which device can be oriented without affecting gravity
-        if(direction.y == -1 && horizontal < threshold)         direction = new Vector2(0, -1);     //portrait
-        else if(direction.y == 1 && horizontal < threshold)     direction = new Vector2(0, 1);      //upside-down portrait
-        else if(direction.x == -1 && vertical < threshold)      direction = new Vector2(-1, 0);     //left landscape
-        else if(direction.x == 1 && vertical < threshold)       direction = new Vector2(1, 0);      //right landscape
+        if(direction.y == -1 && horizontal < threshold)         direction = new Vector2(0, -1);     //left landscape
+        else if(direction.y == 1 && horizontal < threshold)     direction = new Vector2(0, 1);      //right landscape
+        else if(direction.x == -1 && vertical < threshold)      direction = new Vector2(-1, 0);     //portrait
+        else if(direction.x == 1 && vertical < threshold)       direction = new Vector2(1, 0);      //upside-down portrait
         else direction = new Vector2(direction.x, direction.y);
+    }
+
+    void LimitDirection()
+    {
+        if(down && up && left && right) return;     //all directions active
+
+        if(down)    //if there is gravity, down must be active
+        {
+            if(up)
+            {
+                if(left)
+                {
+                    //direction (1, 0) & (1, 1) & (1, -1) not okay                    
+                    if(direction.x == 1) direction.x = 0;
+                }
+                else if(right)
+                {
+                    //direction (-1, 0) & (-1, 1) & (-1, -1) not okay
+                    if(direction.x == -1) direction.x = 0;
+                }
+                else
+                {
+                    //direction (0, 1) && (0, -1) okay
+                    direction.x = 0;
+                }
+            }
+            else if(left)
+            {
+                if(right)
+                {
+                    //direction (-1, 1) && (0, 1) && (1, 1) not okay
+                    if(direction.y == 1) direction.y = 0;
+                }
+                else
+                {
+                    //direction (-1, 0) && (-1, -1) && (0, -1) okay
+                    if(direction.x == 1) direction.x = 0;
+                    if(direction.y == 1) direction.y = 0;
+                }
+            }
+            else if(right)
+            {
+                //direction (1, 0) && (1, -1) && (0, -1) okay
+                if(direction.x == -1) direction.x = 0;
+                if(direction.y == 1) direction.y = 0;
+            }
+            else
+            {
+                //only downward gravity
+                direction = new Vector2(0, -1);
+            }
+        }
+        else
+        { 
+            direction = Vector2.zero;
+        }
     }
 }
