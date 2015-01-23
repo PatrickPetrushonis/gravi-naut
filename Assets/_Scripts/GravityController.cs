@@ -62,57 +62,16 @@ public class GravityController : MonoBehaviour
 
     void LimitDirection()
     {
-        if(down && up && left && right) return;     //all directions active
-
-        if(down)    //if there is gravity, down must be active
-        {
-            if(up)
-            {
-                if(left)
-                {
-                    //direction (1, 0) & (1, 1) & (1, -1) not okay                    
-                    if(direction.x == 1) direction.x = 0;
-                }
-                else if(right)
-                {
-                    //direction (-1, 0) & (-1, 1) & (-1, -1) not okay
-                    if(direction.x == -1) direction.x = 0;
-                }
-                else
-                {
-                    //direction (0, 1) && (0, -1) okay
-                    direction.x = 0;
-                }
-            }
-            else if(left)
-            {
-                if(right)
-                {
-                    //direction (-1, 1) && (0, 1) && (1, 1) not okay
-                    if(direction.y == 1) direction.y = 0;
-                }
-                else
-                {
-                    //direction (-1, 0) && (-1, -1) && (0, -1) okay
-                    if(direction.x == 1) direction.x = 0;
-                    if(direction.y == 1) direction.y = 0;
-                }
-            }
-            else if(right)
-            {
-                //direction (1, 0) && (1, -1) && (0, -1) okay
-                if(direction.x == -1) direction.x = 0;
-                if(direction.y == 1) direction.y = 0;
-            }
-            else
-            {
-                //only downward gravity
-                direction = new Vector2(0, -1);
-            }
-        }
-        else
-        { 
+        if(down && up && left && right)                         //gravity in all directions
+            return;     
+        else if(!down && !up && !left && !right)                //no gravity
             direction = Vector2.zero;
-        }
+        else
+        {
+            if(!down) if(direction.y < 0) direction.y = 0;      //(0, -1)
+            if(!up) if(direction.y > 0) direction.y = 0;        //(0, 1)
+            if(!left) if(direction.x < 0) direction.x = 0;      //(-1, 0)
+            if(!right) if(direction.x > 0) direction.x = 0;     //(1, 0)
+        } 
     }
 }
