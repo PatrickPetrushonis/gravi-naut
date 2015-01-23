@@ -3,56 +3,38 @@ using System.Collections;
 
 public class EventController : MonoBehaviour 
 {
-    public GameObject[] eventObjects;
     private PoolController pool;
-    private bool eventTrigger = false;
+
+    public GameObject[] collectibles;
+    public GameObject[] eventTriggers; 
+    
 
     void Start()
     {
         pool = GameObject.Find("PoolManager").GetComponent<PoolController>();
 
-        GameData.data.collectibleTotal = GameObject.FindGameObjectsWithTag("Collectible").Length;
-        GameData.data.eventTotal = GameObject.FindGameObjectsWithTag("Event").Length;
+        if(collectibles != null) GameData.data.collectibleTotal = collectibles.Length;
+        if(eventTriggers != null) GameData.data.eventTotal = eventTriggers.Length;
 
         GameData.data.collectibleCount = 0;
-        GameData.data.eventCount = 0;
+        GameData.data.eventCount = 0;        
     }
 
     void Update()
     {
-        if(GameData.data.currentLevel == 1)
+        if(GameData.data.collectibleCount >= GameData.data.collectibleTotal)
         {
-            if(GameData.data.collectibleCount >= GameData.data.collectibleTotal)
-            {
-                if(!eventTrigger)
-                {
-                    eventTrigger = true;
-                    StartCoroutine(Spawn());
-                }
-            }
-            else
-            {
-                GameData.data.objective = "Collect orbs to trigger spawner.";
-            }
-
-            if(GameData.data.eventCount >= GameData.data.eventTotal)
-            {
-                GameData.data.complete = true;
-                GameData.data.objective = "Congratulations!";
-            }
-            else
-            {
-                GameData.data.complete = false;
-                GameData.data.objective = "Set cubes onto holders.";
-            }                
-        }            
+            Spawn(0);
+        }
     }
 
-    IEnumerator Spawn()
+    IEnumerator Spawn(int index)
     {
-        for(int x = 0; x < pool.pooledAmount; x++)
+        float amount = pool.toPool[index].slotAmount;
+
+        for(int x = 0; x < amount; x++)
         {
-            pool.Spawn();
+            pool.Spawn(index);
             yield return new WaitForSeconds(1.5f);
         }
 

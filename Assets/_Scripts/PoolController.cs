@@ -2,34 +2,56 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PoolController : MonoBehaviour 
-{    
-    public Transform spawner;
-    public GameObject pooledObject;    
-    public int pooledAmount = 3;
+//single slot identifying how many of what object to pool
+[System.Serializable]
+public class PoolConstructor                    
+{
+    public GameObject slotObject;
+    public int slotAmount;
+}
 
-    private List<GameObject> pool;
+public class PoolController : MonoBehaviour 
+{
+    //location to spawn pooled objects
+    public Transform spawner;
+
+    //pool construction blueprints
+    public List<PoolConstructor> toPool;
+
+    //pool of pooled instantiated objects
+    private List<List<GameObject>> pools = new List<List<GameObject>>();
+    private int poolAmount;
 
     void Start()
     {
-        pool = new List<GameObject>();
-        for(int x = 0; x < pooledAmount; x++)
+        if(toPool != null)
         {
-            GameObject obj = (GameObject)Instantiate(pooledObject);
-            obj.SetActive(false);
-            pool.Add(obj);
-        }
-    }
+            poolAmount = toPool.Count;
 
-    public void Spawn()
-    {
-        for(int x = 0; x < pool.Count; x++)
-        {
-            if(!pool[x].activeInHierarchy)
+            for(int x = 0; x < poolAmount; x++)
             {
-                pool[x].transform.position = spawner.transform.position;
-                pool[x].transform.rotation = spawner.transform.rotation;
-                pool[x].SetActive(true);
+                //create and add a new pool to pools
+                pools.Add(new List<GameObject>());
+
+                for(int y = 0; y < toPool[x].slotAmount; y++)
+                {
+                    GameObject obj = (GameObject)Instantiate(toPool[x].slotObject);
+                    obj.SetActive(false);
+                    pools[x].Add(obj);
+                }
+            }
+        }        
+    }
+    
+    public void Spawn(int index)
+    {
+        for(int x = 0; x < pools[index].Count; x++)
+        {
+            if(!pools[index][x].activeInHierarchy)
+            {
+                pools[index][x].transform.position = spawner.transform.position;
+                pools[index][x].transform.rotation = spawner.transform.rotation;
+                pools[index][x].SetActive(true);
                 break;
             }
         }
