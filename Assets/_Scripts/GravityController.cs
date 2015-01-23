@@ -62,16 +62,32 @@ public class GravityController : MonoBehaviour
 
     void LimitDirection()
     {
-        if(down && up && left && right)                         //gravity in all directions
-            return;     
-        else if(!down && !up && !left && !right)                //no gravity
+        if(down && up && left && right)             //gravity in all directions
+            return;
+        else if(!down && !up && !left && !right)    //no gravity
             direction = Vector2.zero;
         else
         {
-            if(!down) if(direction.y < 0) direction.y = 0;      //(0, -1)
-            if(!up) if(direction.y > 0) direction.y = 0;        //(0, 1)
-            if(!left) if(direction.x < 0) direction.x = 0;      //(-1, 0)
-            if(!right) if(direction.x > 0) direction.x = 0;     //(1, 0)
+            if(!down)   //down direction or Vector2(0, -1)
+            {
+                if(direction.y < 0 && !up) direction.y = 0;
+                else direction.y = 1;
+            }
+            if(!up)     //up direction or Vector2(0, 1)
+            {
+                if(direction.y > 0 && !down) direction.y = 0;
+                else direction.y = -1;
+            }
+            if(!left)   //left direction or Vector2(-1, 0)
+            {
+                if(direction.x < 0 && !right) direction.x = 0;
+                else direction.x = 1;
+            }
+            if(!right)  //right direction or Vector2(1, 0)
+            {
+                if(direction.x > 0 && !left) direction.x = 0;
+                else direction.x = -1;
+            }
         } 
     }
 }

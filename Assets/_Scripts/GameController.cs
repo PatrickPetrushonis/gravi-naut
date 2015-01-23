@@ -11,20 +11,14 @@ public class GameController : MonoBehaviour
         GameData.data.currentLevel = Application.loadedLevel;
     }
 
-    void Update()
-    {
-        if(GameData.data.pause) PauseGame();
-        else ResumeGame();
-    }
-
-    void PauseGame()
+    public void PauseGame()
     {
         Time.timeScale = 0;
         gravityManager.SetActive(false);
         Input.gyro.enabled = false;
     }
 
-    void ResumeGame()
+    public void ResumeGame()
     {
         Time.timeScale = 1;
         gravityManager.SetActive(true);

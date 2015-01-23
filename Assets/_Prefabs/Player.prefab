@@ -29,7 +29,6 @@ GameObject:
   - 61: {fileID: 6142072}
   - 58: {fileID: 5833990}
   - 50: {fileID: 5042072}
-  - 95: {fileID: 9526256}
   - 114: {fileID: 11476488}
   m_Layer: 8
   m_Name: Player
@@ -49,7 +48,7 @@ GameObject:
   m_Layer: 8
   m_Name: GroundCheck
   m_TagString: Untagged
-  m_Icon: {fileID: 266726316, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -102,7 +101,7 @@ Rigidbody2D:
   m_AngularDrag: .0500000007
   m_GravityScale: 0
   m_FixedAngle: 1
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -139,21 +138,6 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: .400000006, y: .649999976}
   m_Center: {x: 0, y: .0500000007}
---- !u!95 &9526256
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 142072}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 1
-  m_ApplyRootMotion: 0
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11476488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -165,7 +149,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1accf0aeb78d2ea4f86012d08111c30a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactCheck: {fileID: 123108}
   groundCheck: {fileID: 459914}
   groundIdentity:
     serializedVersion: 2
@@ -181,9 +164,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e38a48996ccbe841aa16af885e919b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactiveObject: {fileID: 0}
   interactIdentity:
     serializedVersion: 2
     m_Bits: 512
+  canInteract: 0
 --- !u!212 &21242072
 SpriteRenderer:
   m_ObjectHideFlags: 1

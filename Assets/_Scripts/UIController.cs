@@ -48,5 +48,8 @@ public class UIController : MonoBehaviour
     {
         pause.interactable = !pause.interactable;
         GameData.data.pause = !GameData.data.pause;
+
+        if(GameData.data.pause) control.PauseGame();
+        else control.ResumeGame();
     }
 }

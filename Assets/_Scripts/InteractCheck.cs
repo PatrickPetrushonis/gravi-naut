@@ -13,8 +13,7 @@ public class InteractCheck : MonoBehaviour
         {
             canInteract = true;
             interactiveObject = other.gameObject;
-        }
-            
+        }            
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -23,7 +22,6 @@ public class InteractCheck : MonoBehaviour
         {
             canInteract = false;
             interactiveObject = null;
-        }
-            
+        }            
     }
 }

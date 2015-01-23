@@ -6,8 +6,8 @@ public class EventController : MonoBehaviour
     private PoolController pool;
 
     public GameObject[] collectibles;
-    public GameObject[] eventTriggers; 
-    
+    public GameObject[] eventTriggers;
+    public bool triggered = false;
 
     void Start()
     {
@@ -24,7 +24,11 @@ public class EventController : MonoBehaviour
     {
         if(GameData.data.collectibleCount >= GameData.data.collectibleTotal)
         {
-            Spawn(0);
+            if(!triggered)
+            {
+                triggered = true;
+                StartCoroutine(Spawn(0));
+            }
         }
     }
 

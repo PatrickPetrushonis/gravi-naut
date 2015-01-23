@@ -22,9 +22,9 @@ public class PlayerController : MonoBehaviour
     private const float rotationSpeed = 3f;             //speed of reorientation
     private const float groundCheckRadius = 0.2f;       //distance to check for ground
     private const float interactCheckRadius = 0.75f;    //distance an object can be interacted with
-    private const float interactDownTime = 0.25f;    //
+    private const float interactDownTime = 0.25f;       //minimum time between interactions
 
-    private float timeSinceInteract;
+    private float timeSinceInteract;                    //in game time since last interaction
 
     void Start()
     {
