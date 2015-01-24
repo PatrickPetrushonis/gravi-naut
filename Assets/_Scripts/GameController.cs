@@ -5,6 +5,7 @@ public class GameController : MonoBehaviour
 {
     public GameObject gravityManager;
     public GameObject player;
+    public GameObject exit;
 
     void Start()
     {
