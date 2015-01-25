@@ -68,25 +68,23 @@ public class GravityController : MonoBehaviour
             direction = Vector2.zero;
         else
         {
-            if(!down)   //down direction or Vector2(0, -1)
+            if(!down && !up) direction.y = 0;
+            if(!left && !right) direction.x = 0;
+
+            if((direction.y > 0 && down && !up) || (direction.y < 0 && down && up)) direction.y = -1;
+            else if((direction.y < 0 && up && !down) || (direction.y > 0 && down && up)) direction.y = 1;
+            else if(direction.x == 0)
             {
-                if(direction.y < 0 && !up) direction.y = 0;
-                else direction.y = 1;
+                if(down) direction.y = -1;
+                else if(up) direction.y = 1;
             }
-            if(!up)     //up direction or Vector2(0, 1)
+            
+            if((direction.x > 0 && left && !right) || (direction.x < 0 && right && left)) direction.x = -1;
+            else if((direction.x < 0 && right && !left) || (direction.x > 0 && right && left)) direction.x = 1;
+            else if(direction.y == 0)
             {
-                if(direction.y > 0 && !down) direction.y = 0;
-                else direction.y = -1;
-            }
-            if(!left)   //left direction or Vector2(-1, 0)
-            {
-                if(direction.x < 0 && !right) direction.x = 0;
-                else direction.x = 1;
-            }
-            if(!right)  //right direction or Vector2(1, 0)
-            {
-                if(direction.x > 0 && !left) direction.x = 0;
-                else direction.x = -1;
+                if(left) direction.x = -1;
+                else if(right) direction.x = 1;
             }
         } 
     }
