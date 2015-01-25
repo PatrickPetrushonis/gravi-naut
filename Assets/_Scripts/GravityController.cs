@@ -78,14 +78,14 @@ public class GravityController : MonoBehaviour
                 if(down) direction.y = -1;
                 else if(up) direction.y = 1;
             }
-            
+
             if((direction.x > 0 && left && !right) || (direction.x < 0 && right && left)) direction.x = -1;
             else if((direction.x < 0 && right && !left) || (direction.x > 0 && right && left)) direction.x = 1;
             else if(direction.y == 0)
             {
                 if(left) direction.x = -1;
                 else if(right) direction.x = 1;
-            }
+            }       
         } 
     }
 }

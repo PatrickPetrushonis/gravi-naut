@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &159968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 459968}
+  m_Layer: 0
+  m_Name: StartMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &162154
 GameObject:
   m_ObjectHideFlags: 1
@@ -295,7 +310,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &162190
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -365,7 +380,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &162198
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -676,7 +691,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &162238
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -708,7 +723,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &162242
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -793,6 +808,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &459968
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159968}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 22462198}
+  - {fileID: 22462190}
+  - {fileID: 22462242}
+  - {fileID: 22462238}
+  m_Father: {fileID: 22462158}
+  m_RootOrder: 0
 --- !u!114 &11462154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3076,10 +3107,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 22462198}
-  - {fileID: 22462190}
-  - {fileID: 22462242}
-  - {fileID: 22462238}
+  - {fileID: 459968}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
@@ -3353,12 +3381,12 @@ RectTransform:
   - {fileID: 22462186}
   - {fileID: 22462196}
   - {fileID: 22462208}
-  m_Father: {fileID: 22462158}
+  m_Father: {fileID: 459968}
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1247, y: 701}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22462192
 RectTransform:
@@ -3428,12 +3456,12 @@ RectTransform:
   - {fileID: 22462214}
   - {fileID: 22497630}
   - {fileID: 22497636}
-  m_Father: {fileID: 22462158}
+  m_Father: {fileID: 459968}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1247, y: 701}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22462200
 RectTransform:
@@ -3742,12 +3770,12 @@ RectTransform:
   - {fileID: 22462200}
   - {fileID: 22462184}
   - {fileID: 22462172}
-  m_Father: {fileID: 22462158}
+  m_Father: {fileID: 459968}
   m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1247, y: 701}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22462240
 RectTransform:
@@ -3782,12 +3810,12 @@ RectTransform:
   - {fileID: 22462176}
   - {fileID: 22462234}
   - {fileID: 22462206}
-  m_Father: {fileID: 22462158}
+  m_Father: {fileID: 459968}
   m_RootOrder: 2
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1247, y: 701}
   m_Pivot: {x: .5, y: .5}
 --- !u!224 &22497630
 RectTransform:
