@@ -39,6 +39,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca4a469f912dff341a055d7095abf620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameMenu: {fileID: 0}
+  objectiveText: {fileID: 0}
+  progressText: {fileID: 0}
+  pause: {fileID: 0}
   volume: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:

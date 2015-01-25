@@ -8,15 +8,50 @@ public class UIController : MonoBehaviour
     private GameController control;
 
     public Transform gameMenu;
+    public Text objectiveText;
+    public Text progressText;
+ 
     public Button pause;
     public Slider volume;
+
     private float newVolume;
+    private string objective;
+    private string progress;
+    private int currentCount = 0;
 
     void Start()
     {
         control = GameObject.Find("GameManager").GetComponent<GameController>();
+
         newVolume = volume.value;
         GameData.data.volume = newVolume;
+    }
+
+    void Update()
+    {
+        if(GameData.data.currentLevel != 0)
+        {
+            if(objective != GameData.data.objective)
+            {
+                objective = GameData.data.objective;
+                objectiveText.text = objective;
+            }
+
+            if(GameData.data.collectibleCount < GameData.data.collectibleTotal)
+                DetermineProgress(ref GameData.data.collectibleTotal);
+            else
+                DetermineProgress(ref GameData.data.eventCount);
+        }
+    }
+
+    void DetermineProgress(ref int total)
+    {
+        if(currentCount != total)
+        {
+            currentCount = total;
+            progress = currentCount + "/" + total;
+            progressText.text = progress;
+        }
     }
 
     public void DeactivateMenu(GameObject parent)

@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour
         if(level == -1) 
             Application.Quit();
         else if(level == -2)
-            Application.LoadLevel(Application.loadedLevel);
+            Application.LoadLevel(GameData.data.currentLevel);
         else 
             Application.LoadLevel(level);            
     }

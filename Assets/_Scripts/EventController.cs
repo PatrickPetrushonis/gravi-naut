@@ -9,6 +9,7 @@ public class EventController : MonoBehaviour
 
     public GameObject[] collectibles;
     public GameObject[] eventTriggers;
+    public GameObject obstacle;
     public GameObject exit;
     public bool triggered = false;
 
@@ -36,21 +37,21 @@ public class EventController : MonoBehaviour
                 triggered = true;
                 StartCoroutine(Spawn(0));
             }
-        }
 
-        if(GameData.data.eventCount >= GameData.data.eventTotal)
-        {
-            GameData.data.complete = true;
+            if(GameData.data.eventCount >= GameData.data.eventTotal)
+            {
+                if(obstacle.activeSelf == true) obstacle.SetActive(false);
+                GameData.data.complete = true;
+            }
+            else GameData.data.objective = "Insert the power cube into the conduit.";
         }
+        else GameData.data.objective = "Collect the rouge energy.";
 
         if(GameData.data.complete)
         {
             exit.SetActive(true);
-
-            if(react.playerTrigger)
-            {
-                control.LoadGame(GameData.data.currentLevel + 1);
-            }
+            if(react.playerTrigger) control.LoadGame(GameData.data.currentLevel + 1);
+            GameData.data.objective = "Proceed to next level.";
         }
     }
 
