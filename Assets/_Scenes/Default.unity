@@ -762,7 +762,19 @@ Prefab:
     - target: {fileID: 11459760, guid: c4277e585e513f44cbc18a19d17fef71, type: 2}
       propertyPath: volume
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 145714868}
+    - target: {fileID: 11459760, guid: c4277e585e513f44cbc18a19d17fef71, type: 2}
+      propertyPath: progressText
+      value: 
+      objectReference: {fileID: 2027448656}
+    - target: {fileID: 11459760, guid: c4277e585e513f44cbc18a19d17fef71, type: 2}
+      propertyPath: objectiveText
+      value: 
+      objectReference: {fileID: 1143347509}
+    - target: {fileID: 11459760, guid: c4277e585e513f44cbc18a19d17fef71, type: 2}
+      propertyPath: gameMenu
+      value: 
+      objectReference: {fileID: 23454149}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c4277e585e513f44cbc18a19d17fef71, type: 2}
   m_RootGameObject: {fileID: 1063746351}
@@ -1551,10 +1563,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1accf0aeb78d2ea4f86012d08111c30a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactCheck: {fileID: 2014369396}
   groundCheck: {fileID: 1482000257}
+  interactIdentity:
+    serializedVersion: 2
+    m_Bits: 512
   groundIdentity:
     serializedVersion: 2
-    m_Bits: 4294967039
+    m_Bits: 4294967007
 --- !u!58 &370006295
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4303,9 +4319,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca4a469f912dff341a055d7095abf620, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMenu: {fileID: 0}
+  gameMenu: {fileID: 23454149}
+  objectiveText: {fileID: 1143347509}
+  progressText: {fileID: 2027448656}
   pause: {fileID: 1863273603}
-  volume: {fileID: 0}
+  volume: {fileID: 145714868}
 --- !u!4 &1063746353
 Transform:
   m_ObjectHideFlags: 0
@@ -7987,8 +8005,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 2014369396}
-  - 58: {fileID: 2014369397}
-  - 114: {fileID: 2014369398}
   m_Layer: 8
   m_Name: InteractCheck
   m_TagString: Untagged
@@ -8008,35 +8024,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 370006293}
   m_RootOrder: 1
---- !u!58 &2014369397
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5802702, guid: c7a3b70c3aa7a454ea193da1fd47a475,
-    type: 2}
-  m_PrefabInternal: {fileID: 2135085349}
-  m_GameObject: {fileID: 2014369395}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Radius: .200000003
-  m_Center: {x: 0, y: 0}
---- !u!114 &2014369398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11484550, guid: c7a3b70c3aa7a454ea193da1fd47a475,
-    type: 2}
-  m_PrefabInternal: {fileID: 2135085349}
-  m_GameObject: {fileID: 2014369395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e38a48996ccbe841aa16af885e919b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interactiveObject: {fileID: 0}
-  interactIdentity:
-    serializedVersion: 2
-    m_Bits: 512
-  canInteract: 0
 --- !u!1 &2022847921
 GameObject:
   m_ObjectHideFlags: 0
