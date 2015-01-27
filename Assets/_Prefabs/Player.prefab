@@ -8,6 +8,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 423108}
+  - 58: {fileID: 5802702}
+  - 114: {fileID: 11484550}
   m_Layer: 8
   m_Name: InteractCheck
   m_TagString: Untagged
@@ -103,6 +105,17 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
+--- !u!58 &5802702
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 123108}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Radius: .200000003
+  m_Center: {x: 0, y: 0}
 --- !u!58 &5833990
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -136,14 +149,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1accf0aeb78d2ea4f86012d08111c30a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactCheck: {fileID: 423108}
   groundCheck: {fileID: 459914}
+  groundIdentity:
+    serializedVersion: 2
+    m_Bits: 4294967039
+--- !u!114 &11484550
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 123108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e38a48996ccbe841aa16af885e919b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactiveObject: {fileID: 0}
   interactIdentity:
     serializedVersion: 2
     m_Bits: 512
-  groundIdentity:
-    serializedVersion: 2
-    m_Bits: 4294967007
+  canInteract: 0
 --- !u!212 &21242072
 SpriteRenderer:
   m_ObjectHideFlags: 1

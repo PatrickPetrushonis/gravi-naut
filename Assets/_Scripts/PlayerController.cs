@@ -3,13 +3,10 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour 
 {
-    private Transform carriedObject;
+    private InteractCheck interactCheck;
 
-    public Transform interactCheck;                     //location of overlap circle for interaction check
-    public Transform groundCheck;                       //location of overlap circle for ground check
-
-    public LayerMask interactIdentity;                  //which layers the player can interact with       
-    public LayerMask groundIdentity;                    //which layers are considered ground     
+    public Transform groundCheck;                       //location of overlap circle for ground check    
+    public LayerMask groundIdentity;                    //which layers are considered ground 
 
     private Vector2 direction;                          //direction of gravity upon movement request
     private Vector2 start;                              //starting position during a movement request
@@ -17,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     private bool moving = false;                        //whether a movement request is being fulfilled
     private bool grounded = false;                      //whether player is in contact with the ground
+    private bool interacting = false;                   //whether an object is being interacted with
     private bool facingRight = false;                   //whether player is facing right or left
 
     private const float moveSpeed = 2f;                 //speed of player movement    
@@ -30,17 +28,19 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        interactCheck = transform.FindChild("InteractCheck").GetComponent<InteractCheck>();
         timeSinceInteract = Time.time;
+
         if(transform.localScale.x < 0) facingRight = true;
     }
 
     void Update()
     {
         direction = GameData.data.direction;
-        if(!grounded) moving = false;
-
         OrientPlayer();
-        DetermineAction();
+
+        if(grounded) DetermineAction();
+        else moving = false;
     }
 
     void FixedUpdate()
@@ -59,50 +59,39 @@ public class PlayerController : MonoBehaviour
         {
             end = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
 
-            if(Vector2.Distance(start, end) <= interactCheckRadius)
+            if((Vector2.Distance(interactCheck.transform.position, end) < interactCheckRadius) & interactCheck.canInteract)
             {
-                //check if an interactive object is in range
-                Collider2D interactive = Physics2D.OverlapCircle(transform.position, interactCheckRadius, interactIdentity);
-
-                //interact if occurrances within specified time
-                if(interactive != null && Time.time >= (timeSinceInteract + interactDownTime))
-                {
-                    if(carriedObject == null)
-                        Interact(interactive);
-                    else
-                        Drop();
-                }
+                Interact();
             }
-            else if(grounded)
+            else 
             {
                 moving = true;
-            }
-            else
-            {
-                /*
-                if(Vector2.Distance(transform.position, end) < boostCheckRadius))
-                { 
-                    //get direction/angle between transform.position & end
-                    //attempt an aerial boost
-                }
-                */
             }
         }
     }
 
-    void Interact(Collider2D interactive)
+    void Interact()
     {
-        carriedObject = interactive.transform;
-        carriedObject.gameObject.rigidbody2D.isKinematic = true;
-        carriedObject.parent = transform;
-        carriedObject.localPosition = new Vector2(-0.65f, 0);        
-    }
+        if(Time.time > timeSinceInteract + interactDownTime)
+        {
+            if(interacting)
+            {
+                //return object to former state, thus dropping it
+                interacting = false;
+                interactCheck.interactiveObject.rigidbody2D.isKinematic = false;
+                interactCheck.interactiveObject.transform.parent = null;
+            }
+            else
+            {
+                //fix the object to the player
+                interacting = true;
+                interactCheck.interactiveObject.rigidbody2D.isKinematic = true;
+                interactCheck.interactiveObject.transform.parent = transform;
+                interactCheck.interactiveObject.transform.position = new Vector2(interactCheck.transform.position.x + 0.3f, interactCheck.transform.position.y);
+            }
 
-    void Drop()
-    {
-        carriedObject.parent = null;
-        carriedObject.gameObject.rigidbody2D.isKinematic = false;
-        carriedObject = null;
+            timeSinceInteract = Time.time;
+        }
     }
 
     void Move()
@@ -118,13 +107,11 @@ public class PlayerController : MonoBehaviour
 
         if(facingRight)
         {
-            //if((direction.x *= -1) == moveDirection.y || direction.y == moveDirection.x)
             if((direction.y == -1 && moveDirection.x == -1) || (direction.y == 1 && moveDirection.x == 1) || (direction.x == -1 && moveDirection.y == 1) || (direction.x == 1 && moveDirection.y == -1))
                 Flip();
         }
         else if(!facingRight)
         {
-            //if((direction.y *= -1) == moveDirection.x || direction.x == moveDirection.y)
             if((direction.y == -1 && moveDirection.x == 1) || (direction.y == 1 && moveDirection.x == -1) || (direction.x == -1 && moveDirection.y == -1) || (direction.x == 1 && moveDirection.y == 1))
                 Flip();
         }

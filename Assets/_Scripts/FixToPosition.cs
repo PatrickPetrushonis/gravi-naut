@@ -11,20 +11,19 @@ public class FixToPosition : MonoBehaviour
     {
         end = transform.position;  
     }
-    
-    void FixedUpdate()
+
+    void Update()
     {
         if(placed)
         {
             Vector2 start = placed.transform.position;
             Vector2 moveDirection = (end - start).normalized;
 
-            if(Vector3.Distance(start, end) >= precision)
+            if(Vector3.Distance(start, end) > precision)
             {
                 placed.rigidbody2D.velocity = moveDirection;
-                //placed.transform.rotation = Quaternion.Lerp(placed.transform.rotation, transform.rotation, Time.deltaTime);
+                placed.transform.rotation = Quaternion.Lerp(placed.transform.rotation, transform.rotation, Time.deltaTime);
             }
-            else placed.rigidbody2D.velocity = Vector2.zero;
         }
     }
 
@@ -36,7 +35,6 @@ public class FixToPosition : MonoBehaviour
             {
                 placed = other.gameObject;
                 placed.tag = "Untagged";
-                placed.gameObject.rigidbody2D.isKinematic = true;
                 GameData.data.eventCount++;
             }
         }
