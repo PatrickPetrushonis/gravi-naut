@@ -5,7 +5,7 @@ public class ReactToGravity : MonoBehaviour
 {
     void FixedUpdate()
     {
-        if(this.transform.tag == "Dynamic")
+        if(transform.parent == null)
             rigidbody2D.AddForce(GameData.data.gravity * GameData.data.direction);
     }
 }

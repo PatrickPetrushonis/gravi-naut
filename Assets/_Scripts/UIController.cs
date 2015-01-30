@@ -17,7 +17,6 @@ public class UIController : MonoBehaviour
     private float newVolume;
     private string objective;
     private string progress;
-    private int currentCount = 0;
 
     void Start()
     {
@@ -38,18 +37,17 @@ public class UIController : MonoBehaviour
             }
 
             if(GameData.data.collectibleCount < GameData.data.collectibleTotal)
-                DetermineProgress(ref GameData.data.collectibleTotal);
+                DetermineProgress(GameData.data.collectibleCount, GameData.data.collectibleTotal);
             else
-                DetermineProgress(ref GameData.data.eventCount);
+                DetermineProgress(GameData.data.eventCount, GameData.data.eventCount);
         }
     }
 
-    void DetermineProgress(ref int total)
+    void DetermineProgress(int current, int total)
     {
-        if(currentCount != total)
+        if(current != total)
         {
-            currentCount = total;
-            progress = currentCount + "/" + total;
+            progress = total - current + " Remaining";
             progressText.text = progress;
         }
     }
