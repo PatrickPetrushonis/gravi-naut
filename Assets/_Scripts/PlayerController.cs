@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     private const float rotationSpeed = 3f;             //speed of reorientation
     private const float groundCheckRadius = 0.2f;       //distance to check for ground
     private const float interactCheckRadius = 0.75f;    //distance an object can be interacted with
-    private const float interactDownTime = 0.25f;       //minimum time between interactions
+    private const float interactDownTime = 0.5f;        //minimum time between interactions
 
     private float timeSinceInteract;                    //in game time since last interaction
 
@@ -61,16 +61,23 @@ public class PlayerController : MonoBehaviour
 
             if(Vector2.Distance(start, end) <= interactCheckRadius)
             {
-                //check if an interactive object is in range
-                Collider2D interactive = Physics2D.OverlapCircle(transform.position, interactCheckRadius, interactIdentity);
-
                 //interact if occurrances within specified time
-                if(interactive != null && Time.time >= (timeSinceInteract + interactDownTime))
+                if(Time.time >= (timeSinceInteract + interactDownTime))
                 {
-                    if(carriedObject == null)
-                        Interact(interactive);
-                    else
-                        Drop();
+                    //check if an interactive object is in range
+                    Collider2D interactive = Physics2D.OverlapCircle(transform.position, interactCheckRadius, interactIdentity);
+
+                    if(interactive != null)
+                    {
+                        if(carriedObject == null)
+                            Interact(interactive);
+                        else
+                            Drop();
+                    }
+                    else if(grounded)
+                    {
+                        Jump();
+                    }
                 }
             }
             else if(grounded)
@@ -103,6 +110,12 @@ public class PlayerController : MonoBehaviour
         carriedObject.parent = null;
         carriedObject.gameObject.rigidbody2D.isKinematic = false;
         carriedObject = null;
+    }
+
+    void Jump()
+    { 
+        //determine direction from start to end
+        //apply jump force in that direction
     }
 
     void Move()
