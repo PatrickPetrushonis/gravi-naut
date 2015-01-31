@@ -318,6 +318,30 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 606687024}
+    - target: {fileID: 11462170, guid: 84cebc1e993b42a45894f9e7c6cc38a0, type: 2}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 162190, guid: 84cebc1e993b42a45894f9e7c6cc38a0, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 162198, guid: 84cebc1e993b42a45894f9e7c6cc38a0, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11462172, guid: 84cebc1e993b42a45894f9e7c6cc38a0, type: 2}
+      propertyPath: m_Color.r
+      value: .956862748
+      objectReference: {fileID: 0}
+    - target: {fileID: 11462172, guid: 84cebc1e993b42a45894f9e7c6cc38a0, type: 2}
+      propertyPath: m_Color.g
+      value: .956862748
+      objectReference: {fileID: 0}
+    - target: {fileID: 11462172, guid: 84cebc1e993b42a45894f9e7c6cc38a0, type: 2}
+      propertyPath: m_Color.b
+      value: .956862748
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 84cebc1e993b42a45894f9e7c6cc38a0, type: 2}
   m_RootGameObject: {fileID: 105978491}
@@ -696,7 +720,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 578681761}
   m_OnClick:
     m_PersistentCalls:
@@ -728,7 +752,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: .588235319, g: .588235319, b: .588235319, a: 1}
+  m_Color: {r: .956862748, g: .956862748, b: .956862748, a: 1}
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
@@ -2084,6 +2108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMenu: {fileID: 0}
+  objectiveText: {fileID: 0}
+  progressText: {fileID: 0}
   pause: {fileID: 0}
   volume: {fileID: 358048732}
 --- !u!4 &606687025
